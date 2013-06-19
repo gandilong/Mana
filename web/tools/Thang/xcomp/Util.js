@@ -2,8 +2,8 @@
 //Ext.ns("Thang");
 
 Ext.applyIf(Ext,{
-	
-	bigFont:function(text,addBlankSpace,fontSize){//用于加大字体.参数类型(string,boolean,int)
+	hostURL:'http://localhost:8080/mana',
+	bigFont:function(text,addBlankSpace,fontSize,boldSize){//用于加大字体.参数类型(string,boolean,int)
 		if(!fontSize){
 			fontSize=13;//默认字体大小为13px。
 		}
@@ -11,7 +11,12 @@ Ext.applyIf(Ext,{
 		if(!Ext.isDefined(addBlankSpace)){
 		    addBlankSpace=false;//默认不增加空格。
 		}
-		var result='<span style="font-size:'+fontSize+'px">';
+
+       if(!Ext.isDefined(boldSize)){
+		    boldSize='normal';//默认不增加空格。
+		}
+
+		var result='<span style="color:black;font-size:'+fontSize+'px;font-weight:'+boldSize+'">';
 	    if(addBlankSpace){
 		    var size=text.length;
 			for(var i=0;i<size-1;i++){

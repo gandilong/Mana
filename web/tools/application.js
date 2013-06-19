@@ -1,24 +1,21 @@
- var files=[
-               './Thang/xcomp/Util.js',
-               './Thang/view/Home.js',
-               './Thang/view/Office.js',
-               './Thang/view/Person.js',
-               './Thang/view/Info.js',
-               './Thang/view/Archive.js',
-               './Thang/view/System.js',
-               './Thang/view/Main.js',
-               './Thang/view/left/HomeLeft.js',
-               './Thang/view/left/SystemLeft.js'
-              ];
+ //Ext.ns('Thang');
+ //Ext.ns('Thang.view');
+ //Ext.ns('Thang.view.left');
 
-    Ext.Loader.load(files,function(){
-      console.log('load file ok !');
-    },window);
 
 
 Ext.onReady(function(){
 
-    Ext.BLANK_IMAGE_URL = 'tools/extjs/resources/images/default/s.gif';
+    var files=[];
+
+    Ext.Loader.load(files,function(){
+         loadOver=true;
+         console.log('load file ok !');
+    },window);
+
+ 
+
+    Ext.BLANK_IMAGE_URL = 'extjs/resources/images/default/s.gif';
     Ext.QuickTips.init();
     Ext.form.Field.prototype.msgTarget="side";
 
@@ -27,12 +24,13 @@ Ext.onReady(function(){
 
     var homeLeft=new Thang.view.left.HomeLeft({id:'homeLeft'});
 
+    var infoLeft=new Thang.view.left.InfoLeft({id:'infoLeft'});
     var systemLeft=new Thang.view.left.SystemLeft({id:'systemLeft'});
 
     var home=new Thang.view.Home({items:[homeLeft,{region:'center',html:'I am Home center'}]});//首页模块
     var office=new Thang.view.Office({items:[{region:'center',html:'I am Office center'}]});//办公模块
     var person=new Thang.view.Person({items:[{region:'center',html:'I am Person center'}]});//人事管理模块
-    var info=new Thang.view.Info({items:[{region:'center',html:'I am Info center'}]});//信息发布模块
+    var info=new Thang.view.Info({items:[infoLeft,{region:'center',html:'I am Info center'}]});//信息发布模块
     var archive=new Thang.view.Archive({items:[{region:'center',html:'I am Archive center'}]});//归档模块
     var system=new Thang.view.System({items:[systemLeft,{region:'center',html:'I am System center'}]});//系统模块
 
