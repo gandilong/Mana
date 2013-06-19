@@ -6,6 +6,7 @@ Thang.view.Home=Ext.extend(Ext.Panel,{
     	config=config||{};
     	Ext.apply(this,config);
     	Thang.view.Home.superclass.constructor.call(this,{
+            layout:'border',
     		listeners:{'activate':function(self){
                                     self.action();
     		                     }
@@ -13,7 +14,7 @@ Thang.view.Home=Ext.extend(Ext.Panel,{
     	});
     },
     action:function(){
-    	console.log('I Know, officer');
+    	console.log('I Know, officer. I am Home');
     }
 
 });
