@@ -14,6 +14,10 @@ public class Resource {
 
 	private String id;
 	private String name;
+	private int leaf;//0 is leaf and 1 has leaf
+	private Resource parent;
+	private String url;
+	private String opt;
 	
 	@Id
 	@GeneratedValue(generator="uuidGenerator")      

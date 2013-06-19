@@ -9,7 +9,7 @@ Ext.applyIf(Ext,{
 		}
 		
 		if(!Ext.isDefined(addBlankSpace)){
-		    addBlankSpace=true;//默认增加两个空格。
+		    addBlankSpace=false;//默认不增加空格。
 		}
 		var result='<span style="font-size:'+fontSize+'px">';
 	    if(addBlankSpace){

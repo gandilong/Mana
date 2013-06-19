@@ -18,14 +18,14 @@ Thang.view.Main=Ext.extend(Ext.Panel,{
 				     width:110,
 				     height:45,
 					 toggleGroup:'navigation',
-				     text:Ext.bigFont('首页',15,true),
+				     text:Ext.bigFont('首页',true,15),
 				     icon:'../tools/icons/home.png',
 					 handler:function(btn,evt){
 						Ext.getCmp('mainView').layout.setActiveItem(0);
 					}
 				   },'-',
 				  {
-					 text:Ext.bigFont('办公管理',15,false),
+					 text:Ext.bigFont('办公管理',true,15),
 					 icon:'../tools/icons/work.png',
 					 width:110,
 					 height:45,
@@ -34,11 +34,11 @@ Thang.view.Main=Ext.extend(Ext.Panel,{
 					 toggleGroup:'navigation',
 					 menu:{items:[{
 								     id:'incept',
-						             text:Ext.bigFont('收文管理',14,false),
+						             text:Ext.bigFont('收文管理',false,14),
 									 iconCls:'icon-folder_table'
 								    },{
 									 id:'insend',
-									 text:Ext.bigFont('发文管理',14,false),
+									 text:Ext.bigFont('发文管理',false,14),
 									 iconCls:'icon-folder_up'
 								   }]
 					},//menu end
@@ -49,7 +49,7 @@ Thang.view.Main=Ext.extend(Ext.Panel,{
 				   },'-',
 				{
 					 id:'person',
-					 text:Ext.bigFont('人事管理',15,false),
+					 text:Ext.bigFont('人事管理',true,15),
 					 icon:'../tools/icons/person.png',
 					 width:110,
 					 height:45,
@@ -61,7 +61,7 @@ Thang.view.Main=Ext.extend(Ext.Panel,{
 				   },'-',
 				{
 					 id:'info',
-					 text:Ext.bigFont('信息发布',15,false),
+					 text:Ext.bigFont('信息发布',true,15),
 					 icon:'../tools/icons/info.png',
 					 width:110,
 					 height:45,
@@ -73,7 +73,7 @@ Thang.view.Main=Ext.extend(Ext.Panel,{
 				   },'-',
 				{
 					 id:'archive',
-					 text:Ext.bigFont('档案管理',15,false),
+					 text:Ext.bigFont('档案管理',true,15),
 					 icon:'../tools/icons/archive.png',
 					 width:110,
 					 height:45,
@@ -85,7 +85,7 @@ Thang.view.Main=Ext.extend(Ext.Panel,{
 				   },'-',
 				 {
 					 id:'system',
-					 text:Ext.bigFont('系统设置',15,false),
+					 text:Ext.bigFont('系统设置',true,15),
 					 icon:'../tools/icons/tools.png',
 					 width:110,
 					 height:45,
@@ -96,7 +96,7 @@ Thang.view.Main=Ext.extend(Ext.Panel,{
 					 }
 				   },'->',
 				{
-					 text:Ext.bigFont('退出',15,true),
+					 text:Ext.bigFont('退出',true,15),
 					 icon:'../tools/icons/logout.png',
 					 width:110,
 					 height:45,

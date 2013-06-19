@@ -34,7 +34,7 @@ Ext.onReady(function(){
     var person=new Thang.view.Person({items:[{region:'center',html:'I am Person center'}]});//人事管理模块
     var info=new Thang.view.Info({items:[{region:'center',html:'I am Info center'}]});//信息发布模块
     var archive=new Thang.view.Archive({items:[{region:'center',html:'I am Archive center'}]});//归档模块
-    var system=new Thang.view.System({items:[{region:'center',html:'I am System center'}]});//系统模块
+    var system=new Thang.view.System({items:[systemLeft,{region:'center',html:'I am System center'}]});//系统模块
 
     var main=new Thang.view.Main({id:'mainView',items:[home,office,person,info,archive,system]}); 
 

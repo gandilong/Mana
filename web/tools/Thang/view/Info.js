@@ -14,7 +14,7 @@ Thang.view.Info=Ext.extend(Ext.Panel,{
     	});
     },
     action:function(){
-    	console.log('I Know, officer. I am Home');
+    	console.log('I Know, officer. I am Info');
     }
 
 });
