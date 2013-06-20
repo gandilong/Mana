@@ -16,20 +16,30 @@ Thang.view.left.SystemLeft=Ext.extend(Ext.Panel,{
 	             layoutConfig:{
                     animate:true
                  },
-                 items:[{
+                 items:[{//用户管理
                  	title:Ext.bigFont('用户管理',false,14),
                  	autoScroll:true,
                     border:false,
                     xtype:'treepanel',
                     iconCls:'icon-group',
-                    loader:new Ext.tree.TreeLoader(),
+                    loader:new Ext.tree.TreeLoader({url:'sys/dept/tree'}),
                     root:new Ext.tree.AsyncTreeNode({
-                        text:'部门',
+                        text:Ext.bigFont('部门'),
                         id:'root',
-                        expanded:true,
-                        children:[{text:'aaa',leaf:true},{text:'bbb',leaf:true}]
-                    })
-                 },{
+                        expanded:false
+                    }),
+                    listeners:{
+                        'click':function(node,evnt){
+                            if('root'==node.id){
+                                this.findParentByType('systempanel').findById('systemCenter').load({url:'sys/dept',scripts:true});
+                            }else{
+                                //加载page/system/user/list.jsp并传递一个dept_id
+                                this.findParentByType('systempanel').findById('systemCenter').load({url:'sys/user?dept_id='+node.id,scripts:true});
+                            }
+                            //centerView.activate('userList');
+                        }
+                    }
+                 },{//权限管理
                     title:Ext.bigFont('权限管理',false,14),
                     autoScroll:false,
                     border:false,
@@ -48,8 +58,8 @@ Thang.view.left.SystemLeft=Ext.extend(Ext.Panel,{
                            iconCls:'icon-plugin',
                            leaf:true
                         }]
-                    })//权限管理 end
-                 },{
+                    })
+                 },{//资源管理
                     title:Ext.bigFont('资源管理',false,14),
                     autoScroll:true,
                     border:false,

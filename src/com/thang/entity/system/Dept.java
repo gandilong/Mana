@@ -19,6 +19,7 @@ import org.hibernate.annotations.GenericGenerator;
 public class Dept {
 
 	private long id;
+	private String num;//部门编号
 	private String name;//部门名称
 	private User manager;//部门领导，用户ID
 	private Set<User> users;
@@ -59,6 +60,12 @@ public class Dept {
 	}
 	public void setOpt(String opt) {
 		this.opt = opt;
+	}
+	public String getNum(){
+		return num;
+	}
+	public void setNum(String num){
+		this.num=num;
 	}
 	
 }

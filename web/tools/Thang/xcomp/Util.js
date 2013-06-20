@@ -28,6 +28,23 @@ Ext.applyIf(Ext,{
 		}
 		result+="</span>";
 		return result;
+	},
+	loadJS:function(files){
+        Ext.Loader.load(files,function(){
+            console.log('load file ok !');
+        },window);
+	},
+	init:function(){
+
+        Ext.reg('systempanel',Thang.view.System);
+
+		var files=[
+             "../tools/Thang/view/model/UserManager.js",
+             "../tools/Thang/view/model/DeptManager.js",
+		];
+		Ext.Loader.load(files,function(){
+			console.log('model load ok !');
+		},window);
 	}
 
 });

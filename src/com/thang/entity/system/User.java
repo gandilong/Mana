@@ -28,7 +28,7 @@ public class User {
 	private String loginPass;
 	private String birth;
 	private String image;//头像
-	private String sex;
+	private String sex;//0 girl, 1 boy
 	private Dept dept;//部门
 	private Set<Role> roles;
 	private String opt;//备注

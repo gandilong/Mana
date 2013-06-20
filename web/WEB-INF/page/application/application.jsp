@@ -4,37 +4,31 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Application Index</title>
-        <script type="text/javascript" src='<c:url value="/tools/comp/BaseView.js"></c:url>'></script>
-		<script type="text/javascript" src='<c:url value="/tools/comp/HomeView.js"></c:url>'></script>
-		<script type="text/javascript" src='<c:url value="/tools/comp/SystemView.js"></c:url>'></script>
-        <script type="text/javascript" src='<c:url value="/tools/comp/MainView.js"></c:url>'></script>
+
+        <script type="text/javascript" src='<c:url value="/tools/Thang/view/left/SystemLeft.js"></c:url>'></script>
+        <script type="text/javascript" src='<c:url value="/tools/Thang/view/left/ArchiveLeft.js"></c:url>'></script>
+        <script type="text/javascript" src='<c:url value="/tools/Thang/view/left/PersonLeft.js"></c:url>'></script>
+        <script type="text/javascript" src='<c:url value="/tools/Thang/view/left/InfoLeft.js"></c:url>'></script>
+        <script type="text/javascript" src='<c:url value="/tools/Thang/view/left/OfficeLeft.js"></c:url>'></script>
+        <script type="text/javascript" src='<c:url value="/tools/Thang/view/left/HomeLeft.js"></c:url>'></script>
+
+        <script type="text/javascript" src='<c:url value="/tools/Thang/view/System.js"></c:url>'></script>
+        <script type="text/javascript" src='<c:url value="/tools/Thang/view/Archive.js"></c:url>'></script>
+        <script type="text/javascript" src='<c:url value="/tools/Thang/view/Person.js"></c:url>'></script>
+		    <script type="text/javascript" src='<c:url value="/tools/Thang/view/Office.js"></c:url>'></script>
+		    <script type="text/javascript" src='<c:url value="/tools/Thang/view/Info.js"></c:url>'></script>
+        <script type="text/javascript" src='<c:url value="/tools/Thang/view/Home.js"></c:url>'></script>
+
+        <script type="text/javascript" src='<c:url value="/tools/Thang/view/Main.js"></c:url>'></script>
+
+        <script type="text/javascript" src='<c:url value="/tools/application.js"></c:url>'></script>
         
         <style type="text/css">
                #header{
-				      height: 44px;
-					  background: url("${ctx}/tools/icons/main_title_bg.png") repeat-x; 
+				           height: 44px;
+					         background: url("${ctx}/tools/icons/main_title_bg.png") repeat-x; 
                }
-		</style>
-        <script type="text/javascript">
-        <!--
-              Ext.onReady(function(){
-                          var mainView=new Thang.view.MainView({id:'mainView'});            
-                          //var wmsg=new Thang.XMsg();
-                          //wmsg.show();
-						  new Ext.Viewport({
-										       layout:'border',
-											   items:[{
-													      height: 48,
-                                                          region:'north',
-                                                          xtype:'box',
-                                                          el:'header',
-                                                          border:false,
-                                                          margins: '0 0 5 0'
-													  },mainView]
-										   });
-			  });
-        //-->
-        </script>
+		    </style>
         
     </head>
     <body>

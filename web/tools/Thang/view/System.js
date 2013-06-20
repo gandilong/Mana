@@ -16,6 +16,9 @@ Thang.view.System=Ext.extend(Ext.Panel,{
     action:function(){
         //this.findById('systemLeft').getUpdater().refresh();
     	console.log('I Know, officer. I am System');
+    },
+    loadContent:function(config){
+        this.findById('systemCenter').load(config);
     }
 
 

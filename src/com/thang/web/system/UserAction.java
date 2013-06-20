@@ -20,10 +20,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.fasterxml.jackson.core.JsonGenerationException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.core.JsonGenerator;
 import com.thang.dao.BaseDao;
 import com.thang.entity.system.Dept;
 import com.thang.entity.system.User;
 import com.thang.tools.model.Tree;
+import com.thang.tools.model.DeptPojo;
 
 /**
  * 系统用户管理模块
@@ -36,9 +38,42 @@ public class UserAction {
 	private BaseDao dao;
 	ObjectMapper mapper = new ObjectMapper();
 	
-	@RequestMapping("sys/dept/list")
+
+    @RequestMapping("sys/dept")
+    public String deptListPage(){
+         return "system/dept/list";
+    }
+
+    @RequestMapping("sys/dept/list")
 	@ResponseBody
 	public void deptList(HttpServletResponse response){
+		List<Dept> data=dao.list(Dept.class);
+		List<DeptPojo> result=null;
+        if(null!=data&&data.size()>0){
+        	result=new ArrayList<DeptPojo>();
+        	for(Dept dept:data){
+               result.add(new DeptPojo(dept.getId(),dept.getNum(),dept.getName(),dept.getManager().getUserName(),dept.getOpt()));
+        	}
+    		try {
+    			JsonGenerator json=mapper.getFactory().createGenerator(response.getWriter());
+    			json.writeStartObject();
+                json.writeObjectField("data",result);
+    			json.writeEndObject();
+    			dao.closeSession();
+    		} catch (JsonGenerationException e) {
+    			e.printStackTrace();
+    		} catch (JsonMappingException e) {
+    			e.printStackTrace();
+    		} catch (IOException e) {
+    			e.printStackTrace();
+    		}
+        	
+        }
+	}
+
+	@RequestMapping("sys/dept/tree")
+	@ResponseBody
+	public void deptTreeList(HttpServletResponse response){
 		List<Tree> tree=null;
 		List<Dept> data=dao.list(Dept.class);
         if(null!=data&&data.size()>0){
@@ -62,7 +97,7 @@ public class UserAction {
 	}
 	
 	@RequestMapping("sys/user")
-	public String listPage(@RequestParam("dept_id") String dept_id,Model model){
+	public String userListPage(@RequestParam("dept_id") String dept_id,Model model){
 		if(StringUtils.isNotEmpty(dept_id)){
 			model.addAttribute("dept_id", dept_id);
 		}
