@@ -38,10 +38,9 @@
    <target name="copyResource" depends="clean">
        <copy todir="${class.home}">
            <fileset dir="${config.dir}">
-              <exclude name="*.xml"/>
+              <exclude name="*.ini"/>
            </fileset>
        </copy>
-       <copy file="${config.dir}/log4j.properties" todir="${class.home}"/>
    </target>
 
    <target name="compile" depends="copyResource">

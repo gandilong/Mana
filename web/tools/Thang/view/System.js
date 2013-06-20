@@ -8,17 +8,14 @@ Thang.view.System=Ext.extend(Ext.Panel,{
     	Thang.view.System.superclass.constructor.call(this,{
             layout:'border',
     		listeners:{'activate':function(self){
-                                    self.action();
+                                    self.action();//设置选中模块的监听
     		                     }
     		          }//listener end
     	});
     },
     action:function(){
-        //this.findById('systemLeft').getUpdater().refresh();
-    	console.log('I Know, officer. I am System');
-    },
-    loadContent:function(config){
-        this.findById('systemCenter').load(config);
+        //选中模块后的行为
+        this.findById('systemCenter').load({url:'sys/dept',scripts:true});
     }
 
 

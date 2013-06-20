@@ -31,9 +31,10 @@ Thang.view.left.SystemLeft=Ext.extend(Ext.Panel,{
                     listeners:{
                         'click':function(node,evnt){
                             if('root'==node.id){
+                                //加载page/system/dept/list.jsp部门的列表页面
                                 this.findParentByType('systempanel').findById('systemCenter').load({url:'sys/dept',scripts:true});
                             }else{
-                                //加载page/system/user/list.jsp并传递一个dept_id
+                                //加载page/system/user/list.jsp用户的列表页面 并传递一个dept_id
                                 this.findParentByType('systempanel').findById('systemCenter').load({url:'sys/user?dept_id='+node.id,scripts:true});
                             }
                             //centerView.activate('userList');

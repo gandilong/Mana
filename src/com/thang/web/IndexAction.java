@@ -22,16 +22,16 @@ public class IndexAction {
 		return "login";
 	}
 	
-	@ResponseBody
+	//@ResponseBody
 	@RequestMapping(value="login",method = RequestMethod.POST)
 	public String login(@RequestParam("username")String uname,@RequestParam("password")String upass) {
 		UsernamePasswordToken token=new UsernamePasswordToken(uname, upass);
 		Subject sub=SecurityUtils.getSubject();
 		sub.login(token);
 		if(!sub.isAuthenticated()){
-			return "{success:true,msg:'authenticated fail'}";
+			return "redirect:login";
 		}
-		return "{success:true}";
+		return "redirect:app";
 	}
 	
 	@RequestMapping(value="cli",method=RequestMethod.GET)	

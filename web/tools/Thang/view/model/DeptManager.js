@@ -15,7 +15,7 @@ Thang.view.model.DeptManager=Ext.extend(Ext.grid.GridPanel,{
                 dataIndex:'num',
             },{
         		header:'部门名称',
-        		dataIndex:'userName'
+        		dataIndex:'name'
         	},{
         		header:'部门领导',
         		dataIndex:'manager'

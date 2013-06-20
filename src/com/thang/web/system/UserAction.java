@@ -39,27 +39,35 @@ public class UserAction {
 	ObjectMapper mapper = new ObjectMapper();
 	
 
+    //返回部门的列表页面。
     @RequestMapping("sys/dept")
     public String deptListPage(){
          return "system/dept/list";
     }
 
+    //返回部门的查询数据
+    @ResponseBody
     @RequestMapping("sys/dept/list")
-	@ResponseBody
 	public void deptList(HttpServletResponse response){
 		List<Dept> data=dao.list(Dept.class);
 		List<DeptPojo> result=null;
         if(null!=data&&data.size()>0){
         	result=new ArrayList<DeptPojo>();
         	for(Dept dept:data){
-               result.add(new DeptPojo(dept.getId(),dept.getNum(),dept.getName(),dept.getManager().getUserName(),dept.getOpt()));
+                if(null!=dept.getManager()){
+                   result.add(new DeptPojo(dept.getId(),dept.getNum(),dept.getName(),dept.getManager().getUserName(),dept.getOpt()));
+                }else{
+                    result.add(new DeptPojo(dept.getId(),dept.getNum(),dept.getName(),"",dept.getOpt()));
+                }
+               
         	}
+            dao.closeSession();
     		try {
     			JsonGenerator json=mapper.getFactory().createGenerator(response.getWriter());
     			json.writeStartObject();
                 json.writeObjectField("data",result);
     			json.writeEndObject();
-    			dao.closeSession();
+                json.close();
     		} catch (JsonGenerationException e) {
     			e.printStackTrace();
     		} catch (JsonMappingException e) {
@@ -71,6 +79,7 @@ public class UserAction {
         }
 	}
 
+    //返回部门的树结构数据
 	@RequestMapping("sys/dept/tree")
 	@ResponseBody
 	public void deptTreeList(HttpServletResponse response){
@@ -96,6 +105,7 @@ public class UserAction {
         }
 	}
 	
+    //返回到用户的列表页面
 	@RequestMapping("sys/user")
 	public String userListPage(@RequestParam("dept_id") String dept_id,Model model){
 		if(StringUtils.isNotEmpty(dept_id)){
@@ -104,6 +114,7 @@ public class UserAction {
 		return "system/user/list";
 	}
 	
+    //返回用户的的查询列表数据
 	@RequestMapping("sys/user/list")
 	@ResponseBody
 	public void userList(@RequestParam("dept_id") long dept_id,HttpServletResponse response){

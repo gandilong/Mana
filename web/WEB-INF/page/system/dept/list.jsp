@@ -17,12 +17,10 @@
         		                                           root:'data',
         		                                           idProperty:'id',
         		                                           fields:['id','num','name','manager','opt']
-        	                                     })
-          	                               });
+        	                                     })//store end
+          	                               });//deptmanager end
 
-               });
-
-            });
+             });//onready end
     </script>
 </head>
 <body>

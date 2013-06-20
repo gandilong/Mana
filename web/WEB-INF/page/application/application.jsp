@@ -12,6 +12,8 @@
         <script type="text/javascript" src='<c:url value="/tools/Thang/view/left/OfficeLeft.js"></c:url>'></script>
         <script type="text/javascript" src='<c:url value="/tools/Thang/view/left/HomeLeft.js"></c:url>'></script>
 
+        <script type="text/javascript" src='<c:url value="/tools/Thang/view/center/Center.js"></c:url>'></script>
+
         <script type="text/javascript" src='<c:url value="/tools/Thang/view/System.js"></c:url>'></script>
         <script type="text/javascript" src='<c:url value="/tools/Thang/view/Archive.js"></c:url>'></script>
         <script type="text/javascript" src='<c:url value="/tools/Thang/view/Person.js"></c:url>'></script>

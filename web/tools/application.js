@@ -1,9 +1,3 @@
- //Ext.ns('Thang');
- //Ext.ns('Thang.view');
- //Ext.ns('Thang.view.left');
-
-
-
 Ext.onReady(function(){
 
     Ext.BLANK_IMAGE_URL = '../tools/extjs/resources/images/default/s.gif';
@@ -22,12 +16,12 @@ Ext.onReady(function(){
     var officeLeft=new Thang.view.left.OfficeLeft({id:'officeLeft'});
 
 
-    var home=new Thang.view.Home({items:[homeLeft,{region:'center',html:'I am Home center'}]});//首页模块
-    var office=new Thang.view.Office({items:[officeLeft,{region:'center',html:'I am Office center'}]});//办公模块
-    var person=new Thang.view.Person({items:[personLeft,{region:'center',html:'I am Person center'}]});//人事管理模块
-    var info=new Thang.view.Info({items:[infoLeft,{region:'center',html:'I am Info center'}]});//信息发布模块
-    var archive=new Thang.view.Archive({items:[archiveLeft,{region:'center',html:'I am Archive center'}]});//归档模块
-    var system=new Thang.view.System({items:[systemLeft,{id:'systemCenter',layout:'fit',region:'center',html:'I am System center'}]});//系统模块
+    var home=new Thang.view.Home({items:[homeLeft,{id:'homeCenter',xtype:'centerpanel'}]});//首页模块
+    var office=new Thang.view.Office({items:[officeLeft,{id:'officeCenter',xtype:'centerpanel'}]});//办公模块
+    var person=new Thang.view.Person({items:[personLeft,{id:'personCenter',xtype:'centerpanel'}]});//人事管理模块
+    var info=new Thang.view.Info({items:[infoLeft,{id:'infoCenter',xtype:'centerpanel'}]});//信息发布模块
+    var archive=new Thang.view.Archive({items:[archiveLeft,{id:'archiveCenter',xtype:'centerpanel'}]});//归档模块
+    var system=new Thang.view.System({items:[systemLeft,{id:'systemCenter',xtype:'centerpanel'}]});//系统模块
 
     var main=new Thang.view.Main({id:'mainView',items:[home,office,person,info,archive,system]}); 
 
