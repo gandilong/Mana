@@ -7,6 +7,8 @@
      <property name="tomcat.home" value="E:\install\tomcat-6.0.35"/> <!-- tomcat目录 -->
      <property name="web.home" value="web"/> <!-- 应用程序目录 -->
      <property name="src.home" value="src"/> <!-- java源文件目录 -->
+     <property name="config.dir" value="config"/> <!-- 配置文件目录 -->
+     <property name="class.home" value="web/WEB-INF/classes"/> <!-- java源文件目录 -->
      <property name="jdk1.6" value="C:\Java\jdk1.6.0_21\bin/javac"/> 
      <property name="javaCompiler" value="${jdk1.6}"/> <!-- 编译时使用的javac -->
      
@@ -24,11 +26,25 @@
  <!-- 清除已经生成的class文件 -->
     <target name="clean">
         <delete>
-          <fileset dir="${src.home}" includes="**/*.class"/>
+            <fileset dir="${class.home}" includes="**/*.class"/>
+        </delete>
+        <delete file="${class.home}/log4j.properties"/>
+        <delete>
+            <fileset dir="${class.home}" includes="*.xml"/>
         </delete>
     </target>
  <!-- 编译src.home下的所有java文件。fork被设置为true,这样可指定编译使用的JDK,此处使用jdk1.6。必须根据java源文件的编码来设置encoding。 -->
-   <target name="compile" depends="clean">
+
+   <target name="copyResource" depends="clean">
+       <copy todir="${class.home}">
+           <fileset dir="${config.dir}">
+              <exclude name="*.xml"/>
+           </fileset>
+       </copy>
+       <copy file="${config.dir}/log4j.properties" todir="${class.home}"/>
+   </target>
+
+   <target name="compile" depends="copyResource">
        <javac srcdir="${src.home}"
               debug="on"
               deprecation="on"
@@ -37,8 +53,10 @@
               includeantruntime="on"
               encoding="UTF-8"
               fork="yes"
+              destdir="${class.home}"
               executable="${javaCompiler}">
            <classpath refid="classpath"/>
            <compilerarg value="-Xlint:unchecked"/>
        </javac>
    </target>
+</project>
