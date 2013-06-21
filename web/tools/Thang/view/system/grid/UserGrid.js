@@ -1,11 +1,12 @@
-Ext.ns('Thang.view.model');
+Ext.ns('Thang.view.system.grid');
 
-Thang.view.model.UserManager=Ext.extend(Ext.grid.GridPanel,{
+Thang.view.system.grid.UserGrid=Ext.extend(Ext.grid.GridPanel,{
 
     constructor:function(config){
     	config=config||{};
     	Ext.apply(this,config);
-        Thang.view.model.UserManager.superclass.constructor.call(this,{
+        Thang.view.system.grid.UserGrid.superclass.constructor.call(this,{
+            loadMask:'加载数据...',
         	selModel:new Ext.grid.RowSelectionModel({header:'id'}),
         	columns:[new Ext.grid.RowNumberer(),{
         		header:'ID',
@@ -42,5 +43,4 @@ Thang.view.model.UserManager=Ext.extend(Ext.grid.GridPanel,{
         });//superclass call end
 
     }//constructor end
-
 });

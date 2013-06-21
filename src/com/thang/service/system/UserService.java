@@ -6,15 +6,12 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.thang.dao.system.UserDao;
 import com.thang.entity.system.User;
 
 @Component("userService")
 public class UserService {
 
-	private UserDao userDao;
-	
-	
+		
 	public User getUserById(String id){
 		User u=new User();
 		u.setUserName("administrator");
@@ -47,15 +44,4 @@ public class UserService {
 	}
 	
 
-
-	public UserDao getUserDao() {
-		return userDao;
-	}
-
-	@Autowired
-	public void setUserDao(UserDao userDao) {
-		this.userDao = userDao;
-	}
-	
-	
 }

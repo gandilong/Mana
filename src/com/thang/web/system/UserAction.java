@@ -16,6 +16,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.fasterxml.jackson.core.JsonGenerationException;
 import com.fasterxml.jackson.databind.JsonMappingException;
@@ -108,15 +109,27 @@ public class UserAction {
     //返回到用户的列表页面
 	@RequestMapping("sys/user")
 	public String userListPage(@RequestParam("dept_id") String dept_id,Model model){
-		if(StringUtils.isNotEmpty(dept_id)){
-			model.addAttribute("dept_id", dept_id);
-		}
+        model.addAttribute("dept_id",dept_id);
 		return "system/user/list";
 	}
+     
+    //保存用户信息操作
+    @ResponseBody
+    @RequestMapping(value="sys/user/save",method = RequestMethod.POST)
+    public String userSave(User user,Model model){
+        try{
+            dao.insertOrUpdate(user);
+        }catch(Exception e){
+           return "{success:false,msg"+e.getMessage()+"}";
+        }
+        return "{success:true,msg:'保存成功'}";
+    }
+
+
 	
     //返回用户的的查询列表数据
+    @ResponseBody
 	@RequestMapping("sys/user/list")
-	@ResponseBody
 	public void userList(@RequestParam("dept_id") long dept_id,HttpServletResponse response){
 		Dept data=dao.get(dept_id,Dept.class);
 		Map<String,Set<User>> users=new HashMap<String,Set<User>>();

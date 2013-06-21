@@ -1,11 +1,11 @@
-Ext.ns('Thang.view.model');
+Ext.ns('Thang.view.system.grid');
 
-Thang.view.model.DeptManager=Ext.extend(Ext.grid.GridPanel,{
+Thang.view.system.grid.DeptGrid=Ext.extend(Ext.grid.GridPanel,{
 
     constructor:function(config){
     	config=config||{};
     	Ext.apply(this,config);
-        Thang.view.model.DeptManager.superclass.constructor.call(this,{
+        Thang.view.system.grid.DeptGrid.superclass.constructor.call(this,{
         	selModel:new Ext.grid.RowSelectionModel({header:'id'}),
         	columns:[new Ext.grid.RowNumberer(),{
         		header:'ID',

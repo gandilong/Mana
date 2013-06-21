@@ -6,7 +6,7 @@
     <script type="text/javascript">
             Ext.onReady(function(){
                     
-                 new Thang.view.model.DeptManager({
+                 new Thang.view.system.grid.DeptGrid({
           	                                 renderTo:Ext.get('deptGrid'),
           	                                 store:new Ext.data.JsonStore({
         		                                           autoDestroy:true,

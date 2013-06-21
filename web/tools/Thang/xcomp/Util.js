@@ -36,7 +36,7 @@ Ext.applyIf(Ext,{
 	},
 	init:function(){
         //初始化一些模块
-
+         Ext.ns('Thang.view','Thang.view.system.form','Thang.view.system.grid');
         //注册模块的xtype
         Ext.reg('systempanel',Thang.view.System);
         Ext.reg('archivepanel',Thang.view.Archive);
@@ -46,14 +46,18 @@ Ext.applyIf(Ext,{
         Ext.reg('homepanel',Thang.view.Home);
         Ext.reg('centerpanel',Thang.view.center.Center);
 
+        
        
         //延迟加载一些模块
 		var files=[
-             "../tools/Thang/view/model/UserManager.js",
-             "../tools/Thang/view/model/DeptManager.js",
+             "../tools/Thang/view/system/grid/UserGrid.js",
+             "../tools/Thang/view/system/grid/DeptGrid.js",
+
+             "../tools/Thang/view/system/form/UserForm.js"
 		];
 		Ext.Loader.load(files,function(){
 			console.log('model load ok !');
+			Ext.reg('userform',Thang.view.system.form.UserForm);
 		},window);
 	}
 

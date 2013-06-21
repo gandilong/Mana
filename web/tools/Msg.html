@@ -24,7 +24,9 @@
 <script type="text/javascript" src="./Thang/view/left/InfoLeft.js"></script>
 <script type="text/javascript" src="./Thang/view/left/SystemLeft.js"></script>
 
-		<script type="text/javascript" src="./application.js"></script>
+<script type="text/javascript" src="./Thang/view/system/form/UserForm.js"></script>
+
+		
       <style type="text/css">
              .pos{
 			    color:red;
@@ -68,7 +70,7 @@
 
     <script language="JavaScript">
     <!--
-             // Ext.onReady(function(){
+             Ext.onReady(function(){
 	 
 	 //var msg=Ext.fly("msg");
 	// var width=0;
@@ -85,10 +87,11 @@
         //login.show();
 	   
            //Ext.XMsg.alert('aa','bbb');
-		 
+		  new Thang.view.system.form.UserForm().show();
             
-     //});
+     });
     -->
+          
     </script>
 
 </head>
