@@ -7,31 +7,25 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.thang.entity.system.User;
+import com.thang.executor.DBExecutor;
+import com.thang.model.Condition;
 
 @Component("userService")
 public class UserService {
 
+	@Autowired
+	private DBExecutor dbe;
 		
 	public User getUserById(String id){
-		User u=new User();
-		u.setUserName("administrator");
-		u.setId("abcdefg");
-		u.setLoginName("admin");
-		u.setSex("1");
-		u.setLoginPass("su");
-		u.setSalt("admin");
-		return u;
+		return dbe.get(User.class,id);
 	}
 	
 	public User getUserByName(String loginName){
-		User u=new User();
-		u.setUserName("administrator");
-		u.setId("abcdefg");
-		u.setLoginName("admin");
-		u.setSex("1");
-		u.setLoginPass("su");
-		u.setSalt("admin");
-		return u;
+		List<User> users=dbe.list(User.class, new Condition(User.class).eq("loginName", loginName));
+		if(null!=users&&users.size()>0){
+			return users.get(0);
+		}
+		return null;
 	}
 	
 	public List<String> getRoles(String id){

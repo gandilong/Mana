@@ -2,14 +2,10 @@ package com.thang.web.system;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,11 +18,11 @@ import com.fasterxml.jackson.core.JsonGenerationException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.core.JsonGenerator;
-import com.thang.dao.BaseDao;
 import com.thang.entity.system.Dept;
 import com.thang.entity.system.User;
+import com.thang.executor.DBExecutor;
+import com.thang.model.Condition;
 import com.thang.tools.model.Tree;
-import com.thang.tools.model.DeptPojo;
 
 /**
  * 系统用户管理模块
@@ -36,7 +32,8 @@ import com.thang.tools.model.DeptPojo;
 @Controller
 public class UserAction {
 
-	private BaseDao dao;
+	@Autowired
+	private DBExecutor dbe;
 	ObjectMapper mapper = new ObjectMapper();
 	
 
@@ -50,51 +47,37 @@ public class UserAction {
     @ResponseBody
     @RequestMapping("sys/dept/list")
 	public void deptList(HttpServletResponse response){
-		List<Dept> data=dao.list(Dept.class);
-		List<DeptPojo> result=null;
-        if(null!=data&&data.size()>0){
-        	result=new ArrayList<DeptPojo>();
-        	for(Dept dept:data){
-                if(null!=dept.getManager()){
-                   result.add(new DeptPojo(dept.getId(),dept.getNum(),dept.getName(),dept.getManager().getUserName(),dept.getOpt()));
-                }else{
-                    result.add(new DeptPojo(dept.getId(),dept.getNum(),dept.getName(),"",dept.getOpt()));
-                }
-               
-        	}
-            dao.closeSession();
-    		try {
-    			JsonGenerator json=mapper.getFactory().createGenerator(response.getWriter());
-    			json.writeStartObject();
-                json.writeObjectField("data",result);
-    			json.writeEndObject();
-                json.close();
-    		} catch (JsonGenerationException e) {
-    			e.printStackTrace();
-    		} catch (JsonMappingException e) {
-    			e.printStackTrace();
-    		} catch (IOException e) {
-    			e.printStackTrace();
-    		}
-        	
-        }
+		List<Dept> depts=dbe.list(Dept.class);
+		
+    	try {
+    		JsonGenerator json=mapper.getFactory().createGenerator(response.getWriter());
+    		json.writeStartObject();
+            json.writeObjectField("data",depts);
+    		json.writeEndObject();
+            json.close();
+    	} catch (JsonGenerationException e) {
+    		e.printStackTrace();
+    	} catch (JsonMappingException e) {
+    		e.printStackTrace();
+    	} catch (IOException e) {
+    		e.printStackTrace();
+    	}
 	}
 
     //返回部门的树结构数据
 	@RequestMapping("sys/dept/tree")
 	@ResponseBody
 	public void deptTreeList(HttpServletResponse response){
+		List<Dept> depts=dbe.list(Dept.class);
 		List<Tree> tree=null;
-		List<Dept> data=dao.list(Dept.class);
-        if(null!=data&&data.size()>0){
+        if(null!=depts&&depts.size()>0){
         	tree=new ArrayList<Tree>();
-        	for(Dept dept:data){
+        	for(Dept dept:depts){
     		    tree.add(new Tree(String.valueOf(dept.getId()),dept.getName(),true));	
     		}
         	
     		try {
     			mapper.writeValue(response.getWriter(),tree);
-    			dao.closeSession();
     		} catch (JsonGenerationException e) {
     			e.printStackTrace();
     		} catch (JsonMappingException e) {
@@ -118,26 +101,27 @@ public class UserAction {
     @RequestMapping(value="sys/user/save",method = RequestMethod.POST)
     public String userSave(User user,Model model){
         try{
-            dao.insertOrUpdate(user);
+        	dbe.insert(user);
         }catch(Exception e){
            return "{success:false,msg"+e.getMessage()+"}";
         }
-        return "{success:true,msg:'保存成功'}";
+        return "{success:true,msg:'save'}";
     }
 
 
 	
-    //返回用户的的查询列表数据
+    //返回指定部门的用户
     @ResponseBody
 	@RequestMapping("sys/user/list")
-	public void userList(@RequestParam("dept_id") long dept_id,HttpServletResponse response){
-		Dept data=dao.get(dept_id,Dept.class);
-		Map<String,Set<User>> users=new HashMap<String,Set<User>>();
-		users.put("data",data.getUsers());
-        if(null!=data){
+	public void deptUserList(@RequestParam("dept_id") String dept_id,HttpServletResponse response){
+		List<User> users=dbe.list(User.class, new Condition(User.class,true).eq("dept", dept_id));
+        if(null!=users&&users.size()>0){
     		try {
-    			mapper.writeValue(response.getWriter(),users);
-    			dao.closeSession();
+    			JsonGenerator json=mapper.getFactory().createGenerator(response.getWriter());
+        		json.writeStartObject();
+                json.writeObjectField("data",users);
+        		json.writeEndObject();
+                json.close();
     		} catch (JsonGenerationException e) {
     			e.printStackTrace();
     		} catch (JsonMappingException e) {
@@ -149,13 +133,5 @@ public class UserAction {
         }
 	}
 
-	
-	public BaseDao getDao() {
-		return dao;
-	}
-    @Autowired
-	public void setDao(BaseDao dao) {
-		this.dao = dao;
-	}
 	
 }

@@ -18,4 +18,4 @@ Thang.view.center.Center=Ext.extend(Ext.Panel,{
                                              }]//tbar end
          });         
 	}
-})
+});

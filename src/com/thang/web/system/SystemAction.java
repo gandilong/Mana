@@ -30,14 +30,13 @@ public class SystemAction {
 	    User user=new User();
 	    user.setLoginName("admin");
 	    user.setLoginPass("su");
-	    user.setDept(dept);
+	    user.setDept("1");
 	    
 	    dao.insertOrUpdate(user);
 	    
-	    dept.setManager(user);
+	    dept.setManager("1");
 	    Set<User> set=new HashSet<User>();
 	    set.add(user);
-	    dept.setUsers(set);
 	    dao.insertOrUpdate(dept);
 	    System.out.println("==============init stop=========================");
 	    dao.closeSession();

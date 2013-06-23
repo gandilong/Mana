@@ -18,7 +18,7 @@
         		                                           storeId:'UserManagerStore',
         		                                           root:'data',
         		                                           idProperty:'id',
-        		                                           fields:['id','userName','sex','loginName','birth','opt']
+        		                                           fields:[{name:'id',type:'int'},'userName','sex','loginName','birth','opt']
         	                                     }),//store end
                                              tbar:[{
                                                         text:Ext.bigFont('新增',true),

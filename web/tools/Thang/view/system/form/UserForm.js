@@ -7,7 +7,7 @@ Thang.view.system.form.UserForm=Ext.extend(Ext.Window,{
      	 Ext.apply(this,config);
          Thang.view.system.form.UserForm.superclass.constructor.call(this,{
          	layout:'fit',
-         	height:270,
+         	height:300,
          	width:450,
          	autoShow:false,
          	closeAction:'hide',
@@ -56,6 +56,11 @@ Thang.view.system.form.UserForm=Ext.extend(Ext.Window,{
                 	allowBlank:false,
                 	fieldLabel:'登陆名'
                 },{
+                	name:'loginPass',
+                	allowBlank:false,
+                	inputType:'password',
+                	fieldLabel:'登陆密码'
+                },{
                 	name:'dept',
                 	xtype:'hidden'
                 },{
@@ -71,7 +76,7 @@ Thang.view.system.form.UserForm=Ext.extend(Ext.Window,{
          	buttons:[{
                 text:Ext.bigFont('重置'),
                 handler:function(btn,evnt){
-                	var form=this.findParentByType('userform').findByType('form')[0]
+                	var form=this.findParentByType('userform').findByType('form')[0];
                 	form.getForm().reset();
                 	form.findByType('hidden')[1].setValue(Ext.fly('_dept_id').getValue());//从list.jsp页面上得到部门的ID
                 }
@@ -79,6 +84,7 @@ Thang.view.system.form.UserForm=Ext.extend(Ext.Window,{
          		text:Ext.bigFont('保存'),
          		handler:function(btn,evnt){
                     var form=this.findParentByType('userform').findByType('form')[0];
+                    form.findByType('hidden')[0].setValue('0');
                     form.findByType('hidden')[1].setValue(Ext.fly('_dept_id').getValue()); //从list.jsp页面上得到部门的ID
                     console.log('dept id is '+Ext.fly('_dept_id').getValue());
                     if(form.getForm().isValid()){

@@ -13,7 +13,9 @@
 	   default-lazy-init="true">
 
     <jee:jndi-lookup id="mysql_dataSource" jndi-name="java:comp/env/jdbc/mysql"/>
-
+    
+    <bean id="dbe" class="com.thang.executor.DBExecutor"></bean>
+    
     <!-- 使用annotation 自动注册bean, 并保证@Required、@Autowired的属性被注入 -->
 	<context:component-scan base-package="com.thang">
 		<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
@@ -51,7 +53,7 @@
   </bean>
 	
 		<!-- 項目自定义的Realm, 所有accountService依赖的dao都需要用depends-on声明 -->
-	<bean id="shiroDbRealm" class="com.thang.tools.auth.DBRealm" depends-on="userDao">
+	<bean id="shiroDbRealm" class="com.thang.tools.auth.DBRealm" depends-on="dbe">
 		<property name="userService" ref="userService"/>
 	</bean>
 	
