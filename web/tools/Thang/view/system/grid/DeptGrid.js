@@ -6,6 +6,7 @@ Thang.view.system.grid.DeptGrid=Ext.extend(Ext.grid.GridPanel,{
     	config=config||{};
     	Ext.apply(this,config);
         Thang.view.system.grid.DeptGrid.superclass.constructor.call(this,{
+            height:Ext.getBody().getHeight()-135,
         	selModel:new Ext.grid.RowSelectionModel({header:'id'}),
         	columns:[new Ext.grid.RowNumberer(),{
         		header:'ID',

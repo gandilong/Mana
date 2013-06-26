@@ -103,9 +103,9 @@ public class UserAction {
         try{
         	dbe.insert(user);
         }catch(Exception e){
-           return "{success:false,msg"+e.getMessage()+"}";
+           return "{success:false,msg:'1'}";
         }
-        return "{success:true,msg:'save'}";
+        return "{success:true,msg:'0'}";
     }
 
 

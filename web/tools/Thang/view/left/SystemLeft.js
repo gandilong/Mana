@@ -35,7 +35,12 @@ Thang.view.left.SystemLeft=Ext.extend(Ext.Panel,{
                                 this.findParentByType('systempanel').findById('systemCenter').load({url:'sys/dept',scripts:true});
                             }else{
                                 //加载page/system/user/list.jsp用户的列表页面 并传递一个dept_id
-                                this.findParentByType('systempanel').findById('systemCenter').load({url:'sys/user?dept_id='+node.id,scripts:true});
+                                //this.findParentByType('systempanel').findById('systemCenter').load({url:'sys/user?dept_id='+node.id,scripts:true});
+                                
+                                var grid=new Thang.view.system.grid.UserGrid({params:{'dept_id':node.id}});
+                                var systemCenter=this.findParentByType('systempanel').findById('systemCenter');
+                                systemCenter.add(grid);
+                                systemCenter.doLayout();
                             }
                             //centerView.activate('userList');
                         }

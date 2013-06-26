@@ -9,6 +9,7 @@ Thang.view.center.Center=Ext.extend(Ext.Panel,{
          Thang.view.center.Center.superclass.constructor.call(this,{
          	                             layout:'fit',
                                          region:'center',
+                                         height:450,
                                          tbar:[{
                                                     text:Ext.bigFont('刷新',true),
                                                     iconCls:'icon-arrow_refresh',
@@ -16,6 +17,10 @@ Thang.view.center.Center=Ext.extend(Ext.Panel,{
                                                     	btn.findParentByType('centerpanel').getUpdater().refresh();
                                                     }
                                              }]//tbar end
+                                       
          });         
-	}
+	},
+    reload:function(){
+          this.getUpdater().refresh();
+    }
 });

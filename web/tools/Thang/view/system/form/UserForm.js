@@ -1,7 +1,7 @@
 Ext.ns('Thang.view.system.form');
 
 Thang.view.system.form.UserForm=Ext.extend(Ext.Window,{
-     //xtype:'userform',
+     
      constructor:function(config){
      	 config=config||{};
      	 Ext.apply(this,config);
@@ -10,7 +10,7 @@ Thang.view.system.form.UserForm=Ext.extend(Ext.Window,{
          	height:300,
          	width:450,
          	autoShow:false,
-         	closeAction:'hide',
+         	//closeAction:'hide',
          	plain:true,
          	modal:true,
          	resizable:false,
@@ -25,7 +25,8 @@ Thang.view.system.form.UserForm=Ext.extend(Ext.Window,{
                 },
                 items:[{
                 	name:'id',
-                	xtype:'hidden'
+                	xtype:'hidden',
+                    originalValue:'0'
                 },{
                 	name:'userName',
                 	allowBlank:false,
@@ -77,36 +78,32 @@ Thang.view.system.form.UserForm=Ext.extend(Ext.Window,{
                 text:Ext.bigFont('重置'),
                 handler:function(btn,evnt){
                 	var form=this.findParentByType('userform').findByType('form')[0];
-                	form.getForm().reset();
-                	form.findByType('hidden')[1].setValue(Ext.fly('_dept_id').getValue());//从list.jsp页面上得到部门的ID
+                	var idFieldValue=form.getForm().findField('id').getValue();
+                    form.getForm().reset();
+                	//form.findByType('hidden')[1].setValue(this.store.getBaseParamsExt.fly('_dept_id').getValue());//从list.jsp页面上得到部门的ID
                 }
          	},{
          		text:Ext.bigFont('保存'),
          		handler:function(btn,evnt){
                     var form=this.findParentByType('userform').findByType('form')[0];
-                    form.findByType('hidden')[0].setValue('0');
                     form.findByType('hidden')[1].setValue(Ext.fly('_dept_id').getValue()); //从list.jsp页面上得到部门的ID
-                    console.log('dept id is '+Ext.fly('_dept_id').getValue());
+                    
                     if(form.getForm().isValid()){
                        form.getForm().submit({
                     	url:'sys/user/save',
                     	waitTitle:'保存',
                     	waitMsg:'保存到数据库...',
                     	success:function(form, action){
-                            Ext.Msg.alert('Success', action.result.msg);
+                            if('0'==action.result.msg){
+                               //save ok
+                            }else{
+                                //save fail
+                                //Ext.Msg.alert('Success', action.result.msg);
+                            }
+                            store.reload();
                     	},
                     	failure:function(form, action){
-                    		switch (action.failureType) {
-					            case Ext.form.Action.CLIENT_INVALID:
-					                Ext.Msg.alert('失败', '表单字段不合法！');
-					                break;
-					            case Ext.form.Action.CONNECT_FAILURE:
-					                Ext.Msg.alert('失败', '无效的请求！');
-					                break;
-					            case Ext.form.Action.SERVER_INVALID:
-					                Ext.Msg.alert('失败', action.result.msg);
-					                break;
-					       }
+					       Ext.Msg.alert('失败', '请求出错！');
                     	}
                       });//submit end
                     }// if end
@@ -114,6 +111,9 @@ Thang.view.system.form.UserForm=Ext.extend(Ext.Window,{
          		}
          	}]
          });//call end
-     }//constructor end
+     },//constructor end
+     loadRecord:function(rec){
+
+     }
 
 });
