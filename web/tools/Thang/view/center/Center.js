@@ -7,7 +7,7 @@ Thang.view.center.Center=Ext.extend(Ext.Panel,{
          config=config||{};
          Ext.apply(this,config);
          Thang.view.center.Center.superclass.constructor.call(this,{
-         	                             layout:'fit',
+         	                             layout:'card',
                                          region:'center',
                                          height:450,
                                          tbar:[{
@@ -22,5 +22,11 @@ Thang.view.center.Center=Ext.extend(Ext.Panel,{
 	},
     reload:function(){
           this.getUpdater().refresh();
+    },
+    hasItem:function(xtype){
+        return this.findByType(xtype).length>0
+    },
+    getItem:function(xtype){
+        return this.findByType(xtype)[0];
     }
 });

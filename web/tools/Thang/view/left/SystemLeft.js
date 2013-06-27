@@ -30,19 +30,22 @@ Thang.view.left.SystemLeft=Ext.extend(Ext.Panel,{
                     }),
                     listeners:{
                         'click':function(node,evnt){
+                            var centerPanel=this.findParentByType('systempanel').findByType('centerpanel')[0];
                             if('root'==node.id){
-                                //加载page/system/dept/list.jsp部门的列表页面
-                                this.findParentByType('systempanel').findById('systemCenter').load({url:'sys/dept',scripts:true});
+                                if(!centerPanel.hasItem('deptgrid')){
+                                    centerPanel.add(new Thang.view.system.grid.DeptGrid({id:'deptGrid'}));
+                                }
+                                centerPanel.doLayout();
+                                centerPanel.layout.setActiveItem('deptGrid');
                             }else{
-                                //加载page/system/user/list.jsp用户的列表页面 并传递一个dept_id
-                                //this.findParentByType('systempanel').findById('systemCenter').load({url:'sys/user?dept_id='+node.id,scripts:true});
-                                
-                                var grid=new Thang.view.system.grid.UserGrid({params:{'dept_id':node.id}});
-                                var systemCenter=this.findParentByType('systempanel').findById('systemCenter');
-                                systemCenter.add(grid);
-                                systemCenter.doLayout();
+                                if(centerPanel.hasItem('usergrid')){
+                                     centerPanel.getItem('usergrid').setBaseParam('dept_id',node.id);
+                                }else{
+                                     centerPanel.add(new Thang.view.system.grid.UserGrid({id:'userGrid',params:{'dept_id':node.id}}));
+                                }
+                                centerPanel.doLayout();
+                                centerPanel.layout.setActiveItem('userGrid');
                             }
-                            //centerView.activate('userList');
                         }
                     }
                  },{//权限管理

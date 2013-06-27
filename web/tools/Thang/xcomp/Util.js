@@ -57,6 +57,10 @@ Ext.applyIf(Ext,{
 		];
 		Ext.Loader.load(files,function(){
 			console.log('model load ok !');
+
+            Ext.reg('deptgrid',Thang.view.system.grid.DeptGrid);
+
+			Ext.reg('usergrid',Thang.view.system.grid.UserGrid);
 			Ext.reg('userform',Thang.view.system.form.UserForm);
 		},window);
 	}
