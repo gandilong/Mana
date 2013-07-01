@@ -2,7 +2,8 @@
 SQLyog Ultimate v8.71 
 MySQL - 5.6.12 : Database - test
 *********************************************************************
-*/
+*/
+
 
 /*!40101 SET NAMES utf8 */;
 
@@ -23,7 +24,7 @@ CREATE TABLE `sys_dept_info` (
   `manager` varchar(36) DEFAULT NULL,
   `opt` varchar(225) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 /*Data for the table `sys_dept_info` */
 
@@ -41,7 +42,7 @@ CREATE TABLE `sys_resource_info` (
   `leaf` char(1) DEFAULT NULL COMMENT '0 is leaf,1 has leaf',
   `opt` varchar(225) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
 
 /*Data for the table `sys_resource_info` */
 
@@ -55,7 +56,7 @@ CREATE TABLE `sys_role_info` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 /*Data for the table `sys_role_info` */
 
@@ -70,7 +71,7 @@ CREATE TABLE `sys_role_resource_info` (
   `role` varchar(36) DEFAULT NULL,
   `resource` varchar(36) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 
 /*Data for the table `sys_role_resource_info` */
 
@@ -91,7 +92,7 @@ CREATE TABLE `sys_user_info` (
   `dept` varchar(36) DEFAULT NULL,
   `opt` varchar(225) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 /*Data for the table `sys_user_info` */
 
@@ -106,7 +107,7 @@ CREATE TABLE `sys_user_role_info` (
   `user` varchar(36) DEFAULT NULL,
   `role` varchar(36) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 /*Data for the table `sys_user_role_info` */
 
