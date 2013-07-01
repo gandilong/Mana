@@ -34,17 +34,22 @@ Thang.view.left.SystemLeft=Ext.extend(Ext.Panel,{
                             if('root'==node.id){
                                 if(!centerPanel.hasItem('deptgrid')){
                                     centerPanel.add(new Thang.view.system.grid.DeptGrid({id:'deptGrid'}));
+                                    centerPanel.doLayout();
+                                    centerPanel.layout.setActiveItem('deptGrid');
+                                }else{
+                                    centerPanel.getItem('deptgrid').getStore().reload();
                                 }
-                                centerPanel.doLayout();
-                                centerPanel.layout.setActiveItem('deptGrid');
+                                
                             }else{
                                 if(centerPanel.hasItem('usergrid')){
                                      centerPanel.getItem('usergrid').setBaseParam('dept_id',node.id);
+                                     centerPanel.getItem('usergrid').getStore().reload();
                                 }else{
                                      centerPanel.add(new Thang.view.system.grid.UserGrid({id:'userGrid',params:{'dept_id':node.id}}));
+                                     centerPanel.doLayout();
+                                     centerPanel.layout.setActiveItem('userGrid');
                                 }
-                                centerPanel.doLayout();
-                                centerPanel.layout.setActiveItem('userGrid');
+                                
                             }
                         }
                     }
