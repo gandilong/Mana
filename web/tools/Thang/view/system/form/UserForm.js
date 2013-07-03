@@ -25,7 +25,8 @@ Thang.view.system.form.UserForm=Ext.extend(Ext.Window,{
                 items:[{
                 	name:'id',
                 	xtype:'hidden',
-                    originalValue:'0'
+                    originalValue:'0',
+                    value:'0'
                 },{
                 	name:'userName',
                 	allowBlank:false,
@@ -83,7 +84,8 @@ Thang.view.system.form.UserForm=Ext.extend(Ext.Window,{
          	},{
          		text:Ext.bigFont('保存'),
          		handler:function(btn,evnt){
-                    var form=this.findParentByType('userform').findByType('form')[0];
+                    var winForm=this.findParentByType('userform');
+                    var form=winForm.findByType('form')[0];
                     if(form.getForm().isValid()){
                        form.getForm().submit({
                     	url:'sys/user/save',
@@ -91,9 +93,13 @@ Thang.view.system.form.UserForm=Ext.extend(Ext.Window,{
                     	waitMsg:'保存到数据库...',
                     	success:function(form, action){
                             if('0'==action.result.msg){
-                               Ext.Msg.alert('操作提示','保存成功！');
+                               Ext.Msg.alert('操作提示','保存成功！',function(){
+                                    winForm.close();
+                               });
                             }else{
-                               Ext.Msg.alert('操作提示','保存失败！');
+                               Ext.Msg.alert('操作提示','保存失败！',function(){
+                                    //winForm.close();
+                               });
                             }
                     	},
                     	failure:function(form, action){

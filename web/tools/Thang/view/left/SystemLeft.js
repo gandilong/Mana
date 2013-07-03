@@ -37,17 +37,22 @@ Thang.view.left.SystemLeft=Ext.extend(Ext.Panel,{
                                     centerPanel.doLayout();
                                     centerPanel.layout.setActiveItem('deptGrid');
                                 }else{
+                                    centerPanel.layout.setActiveItem('deptGrid');
                                     centerPanel.getItem('deptgrid').getStore().reload();
                                 }
                                 
                             }else{
                                 if(centerPanel.hasItem('usergrid')){
+                                     centerPanel.layout.setActiveItem('userGrid');
                                      centerPanel.getItem('usergrid').setBaseParam('dept_id',node.id);
-                                     centerPanel.getItem('usergrid').getStore().reload();
+                                     var store=centerPanel.getItem('usergrid').getStore();
+                                     store.removeAll();
+                                     store.reload();
                                 }else{
                                      centerPanel.add(new Thang.view.system.grid.UserGrid({id:'userGrid',params:{'dept_id':node.id}}));
                                      centerPanel.doLayout();
                                      centerPanel.layout.setActiveItem('userGrid');
+                                     centerPanel.getItem('usergrid').getStore().load();
                                 }
                                 
                             }
@@ -61,7 +66,6 @@ Thang.view.left.SystemLeft=Ext.extend(Ext.Panel,{
                     rootVisible:false,
                     iconCls:'icon-award_star_gold_2',
                     root:new Ext.tree.AsyncTreeNode({
-                        text:'good',
                         expanded:true,
                         children:[{
                            text:Ext.bigFont('角色管理'),
@@ -90,6 +94,6 @@ Thang.view.left.SystemLeft=Ext.extend(Ext.Panel,{
                     })
                  }]//items end
         });
-	}
+	}//constructor end
 
 });

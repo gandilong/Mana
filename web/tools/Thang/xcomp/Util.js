@@ -46,7 +46,7 @@ Ext.applyIf(Ext,{
         Ext.reg('homepanel',Thang.view.Home);
         Ext.reg('centerpanel',Thang.view.center.Center);
 
-        
+        Ext.reg('systemleft',Thang.view.left.SystemLeft);
        
         //延迟加载一些模块
 		var files=[

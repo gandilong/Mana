@@ -8,7 +8,6 @@ Thang.view.system.grid.DeptGrid=Ext.extend(Ext.grid.GridPanel,{
                                            autoDestroy:true,
                                            autoLoad:true,
                                            url:'sys/dept/list',
-                                           //baseParams:config.params,
                                            root:'data',
                                            idProperty:'id',
                                            fields:['id','num','name','manager','opt']
