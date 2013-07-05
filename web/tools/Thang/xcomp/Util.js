@@ -52,18 +52,22 @@ Ext.applyIf(Ext,{
 		var files=[
              "../tools/Thang/view/system/grid/UserGrid.js",
              "../tools/Thang/view/system/grid/DeptGrid.js",
+             "../tools/Thang/view/system/grid/RoleGrid.js",
 
              "../tools/Thang/view/system/form/UserForm.js",
              "../tools/Thang/view/system/form/DeptForm.js",
+             "../tools/Thang/view/system/form/RoleForm.js",
 		];
 		Ext.Loader.load(files,function(){
 			console.log('model load ok !');
 
             Ext.reg('deptgrid',Thang.view.system.grid.DeptGrid);
 			Ext.reg('usergrid',Thang.view.system.grid.UserGrid);
+			Ext.reg('rolegrid',Thang.view.system.grid.RoleGrid);
 
 			Ext.reg('deptform',Thang.view.system.form.DeptForm);
 			Ext.reg('userform',Thang.view.system.form.UserForm);
+			Ext.reg('roleform',Thang.view.system.form.RoleForm);
 		},window);
 	}
 

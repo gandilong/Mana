@@ -37,12 +37,7 @@ public class UserAction {
 	ObjectMapper mapper = new ObjectMapper();
 	
 
-    //返回部门的列表页面。
-    @RequestMapping("sys/dept")
-    public String deptListPage(){
-         return "system/dept/list";
-    }
-
+    
     //返回部门的查询数据
     @RequestMapping("sys/dept/list")
 	public void deptList(HttpServletResponse response){
@@ -88,13 +83,7 @@ public class UserAction {
         }
 	}
 	
-    //返回到用户的列表页面
-	@RequestMapping("sys/user")
-	public String userListPage(@RequestParam("dept_id") String dept_id,Model model){
-        model.addAttribute("dept_id",dept_id);
-		return "system/user/list";
-	}
-     
+         
     //保存用户信息操作
     @ResponseBody
     @RequestMapping(value="sys/user/save",method = RequestMethod.POST)

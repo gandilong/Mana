@@ -68,15 +68,34 @@ Thang.view.left.SystemLeft=Ext.extend(Ext.Panel,{
                     root:new Ext.tree.AsyncTreeNode({
                         expanded:true,
                         children:[{
+                           id:'role',
                            text:Ext.bigFont('角色管理'),
                            iconCls:'icon-user_suit',
                            leaf:true
                         },{
+                           id:'resource',
                            text:Ext.bigFont('资源管理'),
                            iconCls:'icon-plugin',
                            leaf:true
                         }]
-                    })
+                    }),
+                    listeners:{
+                        'click':function(node,e){
+                            var centerPanel=this.findParentByType('systempanel').findByType('centerpanel')[0];
+                            if('role'==node.id){
+                                if(centerPanel.hasItem('rolegrid')){
+
+                                }else{
+                                    centerPanel.add(new Thang.view.system.grid.RoleGrid({id:'roleGrid'}));
+                                    centerPanel.doLayout();
+                                    centerPanel.layout.setActiveItem('roleGrid');
+                                    centerPanel.getItem('rolegrid').getStore().load();
+                                }
+                            }else if('resource'==node.id){
+
+                            }else{}
+                        }
+                    }
                  },{//资源管理
                     title:Ext.bigFont('资源管理',false,14),
                     autoScroll:true,
