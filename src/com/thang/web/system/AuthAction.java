@@ -41,8 +41,6 @@ public class AuthAction {
     @RequestMapping("sys/role/list")
 	public void roleList(HttpServletResponse response){
 		List<Role> roles=dbe.list(Role.class);
-        System.out.println(roles.get(0).getName());
-        System.out.println(roles.get(0).getOpt());
 		response.setContentType("text/html;charset=UTF-8");
     	try {
     		JsonGenerator json=mapper.getFactory().createGenerator(response.getWriter());

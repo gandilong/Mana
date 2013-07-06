@@ -9,7 +9,7 @@
      <property name="src.home" value="src"/> <!-- java源文件目录 -->
      <property name="config.dir" value="config"/> <!-- 配置文件目录 -->
      <property name="class.home" value="web/WEB-INF/classes"/> <!-- java源文件目录 -->
-     <property name="jdk1.6" value="C:\Java\jdk1.6.0_21"/> 
+     <property name="jdk1.6" value="C:\Java"/> 
      <property name="javaCompiler" value="${jdk1.6}\bin\javac"/> <!-- 编译时使用的javac -->
      
      <!-- 设置 classpath,即编译时需要引用的库文件 -->

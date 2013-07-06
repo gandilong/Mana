@@ -27,9 +27,7 @@ public class Role {
 		return opt;
 	}
 	public void setOpt(String opt) {
-		this.name = opt;
+		this.opt = opt;
 	}
-
-
 	
 }
