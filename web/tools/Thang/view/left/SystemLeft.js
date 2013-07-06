@@ -30,14 +30,32 @@ Thang.view.left.SystemLeft=Ext.extend(Ext.Panel,{
                     }),
                     listeners:{
                         'click':function(node,evnt){
+                            var centerPanel=this.findParentByType('systempanel').findByType('centerpanel')[0];
                             if('root'==node.id){
-                                //加载page/system/dept/list.jsp部门的列表页面
-                                this.findParentByType('systempanel').findById('systemCenter').load({url:'sys/dept',scripts:true});
+                                if(!centerPanel.hasItem('deptgrid')){
+                                    centerPanel.add(new Thang.view.system.grid.DeptGrid({id:'deptGrid'}));
+                                    centerPanel.doLayout();
+                                    centerPanel.layout.setActiveItem('deptGrid');
+                                }else{
+                                    centerPanel.layout.setActiveItem('deptGrid');
+                                    centerPanel.getItem('deptgrid').getStore().reload();
+                                }
+                                
                             }else{
-                                //加载page/system/user/list.jsp用户的列表页面 并传递一个dept_id
-                                this.findParentByType('systempanel').findById('systemCenter').load({url:'sys/user?dept_id='+node.id,scripts:true});
+                                if(centerPanel.hasItem('usergrid')){
+                                     centerPanel.layout.setActiveItem('userGrid');
+                                     centerPanel.getItem('usergrid').setBaseParam('dept_id',node.id);
+                                     var store=centerPanel.getItem('usergrid').getStore();
+                                     store.removeAll();
+                                     store.reload();
+                                }else{
+                                     centerPanel.add(new Thang.view.system.grid.UserGrid({id:'userGrid',params:{'dept_id':node.id}}));
+                                     centerPanel.doLayout();
+                                     centerPanel.layout.setActiveItem('userGrid');
+                                     centerPanel.getItem('usergrid').getStore().load();
+                                }
+                                
                             }
-                            //centerView.activate('userList');
                         }
                     }
                  },{//权限管理
@@ -48,18 +66,36 @@ Thang.view.left.SystemLeft=Ext.extend(Ext.Panel,{
                     rootVisible:false,
                     iconCls:'icon-award_star_gold_2',
                     root:new Ext.tree.AsyncTreeNode({
-                        text:'good',
                         expanded:true,
                         children:[{
+                           id:'role',
                            text:Ext.bigFont('角色管理'),
                            iconCls:'icon-user_suit',
                            leaf:true
                         },{
+                           id:'resource',
                            text:Ext.bigFont('资源管理'),
                            iconCls:'icon-plugin',
                            leaf:true
                         }]
-                    })
+                    }),
+                    listeners:{
+                        'click':function(node,e){
+                            var centerPanel=this.findParentByType('systempanel').findByType('centerpanel')[0];
+                            if('role'==node.id){
+                                if(centerPanel.hasItem('rolegrid')){
+
+                                }else{
+                                    centerPanel.add(new Thang.view.system.grid.RoleGrid({id:'roleGrid'}));
+                                    centerPanel.doLayout();
+                                    centerPanel.layout.setActiveItem('roleGrid');
+                                    centerPanel.getItem('rolegrid').getStore().load();
+                                }
+                            }else if('resource'==node.id){
+
+                            }else{}
+                        }
+                    }
                  },{//资源管理
                     title:Ext.bigFont('资源管理',false,14),
                     autoScroll:true,
@@ -77,6 +113,6 @@ Thang.view.left.SystemLeft=Ext.extend(Ext.Panel,{
                     })
                  }]//items end
         });
-	}
+	}//constructor end
 
 });

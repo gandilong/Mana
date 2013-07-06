@@ -37,18 +37,12 @@ public class UserAction {
 	ObjectMapper mapper = new ObjectMapper();
 	
 
-    //返回部门的列表页面。
-    @RequestMapping("sys/dept")
-    public String deptListPage(){
-         return "system/dept/list";
-    }
-
+    
     //返回部门的查询数据
-    @ResponseBody
     @RequestMapping("sys/dept/list")
 	public void deptList(HttpServletResponse response){
 		List<Dept> depts=dbe.list(Dept.class);
-		
+		response.setContentType("text/html;charset=UTF-8");
     	try {
     		JsonGenerator json=mapper.getFactory().createGenerator(response.getWriter());
     		json.writeStartObject();
@@ -66,10 +60,10 @@ public class UserAction {
 
     //返回部门的树结构数据
 	@RequestMapping("sys/dept/tree")
-	@ResponseBody
 	public void deptTreeList(HttpServletResponse response){
 		List<Dept> depts=dbe.list(Dept.class);
 		List<Tree> tree=null;
+        response.setContentType("text/html;charset=UTF-8");
         if(null!=depts&&depts.size()>0){
         	tree=new ArrayList<Tree>();
         	for(Dept dept:depts){
@@ -89,32 +83,72 @@ public class UserAction {
         }
 	}
 	
-    //返回到用户的列表页面
-	@RequestMapping("sys/user")
-	public String userListPage(@RequestParam("dept_id") String dept_id,Model model){
-        model.addAttribute("dept_id",dept_id);
-		return "system/user/list";
-	}
-     
+         
     //保存用户信息操作
     @ResponseBody
     @RequestMapping(value="sys/user/save",method = RequestMethod.POST)
     public String userSave(User user,Model model){
         try{
-        	dbe.insert(user);
+            if(0!=user.getId()){
+               dbe.update(user);
+            }else{
+               dbe.insert(user);    
+            }
+        	
         }catch(Exception e){
-           return "{success:false,msg"+e.getMessage()+"}";
+           return "{success:false,msg:'1'}";
         }
-        return "{success:true,msg:'save'}";
+        return "{success:true,msg:'0'}";
+    }
+
+   
+    //保存部门信息操作
+    @ResponseBody
+    @RequestMapping(value="sys/dept/save",method = RequestMethod.POST)
+    public String deptSave(Dept dept,Model model){
+        try{
+            if(0!=dept.getId()){
+               dbe.update(dept);
+            }else{
+               dbe.insert(dept);    
+            }
+        }catch(Exception e){
+           return "{success:false,msg:'1'}";
+        }
+        return "{success:true,msg:'0'}";
+    }
+
+    //删除用户信息操作
+    @ResponseBody
+    @RequestMapping(value="sys/user/delete",method = RequestMethod.POST)
+    public String userDelete(@RequestParam("user_id")long user_id,Model model){
+        try{
+            dbe.delete(User.class,user_id);
+        }catch(Exception e){
+           return "{success:false,msg:'1'}";
+        }
+        return "{success:true,msg:'0'}";
+    }
+
+    //删除部门信息操作
+    @ResponseBody
+    @RequestMapping(value="sys/dept/delete",method = RequestMethod.POST)
+    public String deptDelete(@RequestParam("user_id")long user_id,Model model){
+        try{
+            dbe.delete(User.class,user_id);
+        }catch(Exception e){
+           return "{success:false,msg:'1'}";
+        }
+        return "{success:true,msg:'0'}";
     }
 
 
 	
     //返回指定部门的用户
-    @ResponseBody
 	@RequestMapping("sys/user/list")
 	public void deptUserList(@RequestParam("dept_id") String dept_id,HttpServletResponse response){
 		List<User> users=dbe.list(User.class, new Condition(User.class,true).eq("dept", dept_id));
+        response.setContentType("text/html;charset=UTF-8");
         if(null!=users&&users.size()>0){
     		try {
     			JsonGenerator json=mapper.getFactory().createGenerator(response.getWriter());

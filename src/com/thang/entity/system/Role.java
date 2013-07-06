@@ -9,6 +9,7 @@ public class Role {
 
 	private String id;
 	private String name;
+	private String opt;
 	
 	public String getId() {
 		return id;
@@ -22,5 +23,13 @@ public class Role {
 	public void setName(String name) {
 		this.name = name;
 	}
+    public String getOpt() {
+		return opt;
+	}
+	public void setOpt(String opt) {
+		this.name = opt;
+	}
+
+
 	
 }

@@ -15,8 +15,7 @@ Thang.view.System=Ext.extend(Ext.Panel,{
     },
     action:function(){
         //选中模块后的行为
-        this.findById('systemCenter').load({url:'sys/dept',scripts:true});
+        //this.findById('systemCenter').load({url:'sys/dept',scripts:true});
     }
-
 
 });

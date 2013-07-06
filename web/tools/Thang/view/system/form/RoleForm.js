@@ -1,19 +1,19 @@
 Ext.ns('Thang.view.system.form');
 
-Thang.view.system.form.UserForm=Ext.extend(Ext.Window,{
+Thang.view.system.form.RoleForm=Ext.extend(Ext.Window,{
      
      constructor:function(config){
      	 config=config||{};
      	 Ext.apply(this,config);
-         Thang.view.system.form.UserForm.superclass.constructor.call(this,{
+         Thang.view.system.form.RoleForm.superclass.constructor.call(this,{
          	layout:'fit',
-         	height:300,
+         	height:150,
          	width:450,
          	autoShow:false,
          	plain:true,
          	modal:true,
          	resizable:false,
-         	title:Ext.bigFont('用户表单'),
+         	title:Ext.bigFont('角色表单'),
          	items:[{
                 xtype:'form',
                 labelAlign:'right',
@@ -28,44 +28,9 @@ Thang.view.system.form.UserForm=Ext.extend(Ext.Window,{
                     originalValue:'0',
                     value:'0'
                 },{
-                	name:'userName',
+                	name:'name',
                 	allowBlank:false,
-                	fieldLabel:'用户名'
-                },{
-                	hiddenName:'sex',
-                	xtype:'combo',
-                	fieldLabel:'性别',
-                	store:new Ext.data.ArrayStore({
-                		fields:['value','text'],
-                	    data:[['0','女'], ['1','男']]	
-                	}),
-                	mode:'local',
-                	allowBlank:false,
-                	valueField:'value',
-                	displayField:'text',
-                	triggerAction:'all',
-                	forceSelection:true,
-                	selectOnFocus:true
-                },{
-                    id:'birth',
-                	xtype:'datefield',
-                    format:'Y-m-d',
-                    name:'birth',
-                	allowBlank:false,
-                	fieldLabel:'出生日期'
-                },{
-                	name:'loginName',
-                	allowBlank:false,
-                	fieldLabel:'登陆名'
-                },{
-                    id:'loginPass',
-                	name:'loginPass',
-                	allowBlank:false,
-                	inputType:'password',
-                	fieldLabel:'登陆密码'
-                },{
-                	name:'dept',
-                	xtype:'hidden'
+                	fieldLabel:'角色名'
                 },{
                 	name:'opt',
                 	xtype:'textarea',
@@ -79,16 +44,16 @@ Thang.view.system.form.UserForm=Ext.extend(Ext.Window,{
          	buttons:[{
                 text:Ext.bigFont('重置'),
                 handler:function(btn,evnt){
-                	this.findParentByType('userform').findByType('form')[0].getForm().reset();
+                	this.findParentByType('roleform').findByType('form')[0].getForm().reset();
                 }
          	},{
          		text:Ext.bigFont('保存'),
          		handler:function(btn,evnt){
-                    var winForm=this.findParentByType('userform');
+                    var winForm=this.findParentByType('roleform');
                     var form=winForm.findByType('form')[0];
                     if(form.getForm().isValid()){
                        form.getForm().submit({
-                    	url:'sys/user/save',
+                    	url:'sys/role/save',
                     	waitTitle:'保存',
                     	waitMsg:'保存到数据库...',
                     	success:function(form, action){

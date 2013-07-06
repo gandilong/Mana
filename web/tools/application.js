@@ -21,7 +21,18 @@ Ext.onReady(function(){
     var person=new Thang.view.Person({items:[personLeft,{id:'personCenter',xtype:'centerpanel'}]});//人事管理模块
     var info=new Thang.view.Info({items:[infoLeft,{id:'infoCenter',xtype:'centerpanel'}]});//信息发布模块
     var archive=new Thang.view.Archive({items:[archiveLeft,{id:'archiveCenter',xtype:'centerpanel'}]});//归档模块
-    var system=new Thang.view.System({items:[systemLeft,{id:'systemCenter',xtype:'centerpanel'}]});//系统模块
+
+    
+    var system=new Thang.view.System({
+                                      items:[
+                                             systemLeft,
+                                              {
+                                                xtype:'centerpanel',
+                                                activeItem:'deptgrid'
+                                              }
+                                            ]//system items end
+                                      });//系统模块
+
 
     var main=new Thang.view.Main({id:'mainView',items:[home,office,person,info,archive,system]}); 
 

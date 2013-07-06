@@ -1,6 +1,6 @@
 Ext.ns('Thang.view.system.grid');
 
-Thang.view.system.grid.UserGrid=Ext.extend(Ext.grid.GridPanel,{
+Thang.view.system.grid.RoleGrid=Ext.extend(Ext.grid.GridPanel,{
 
     constructor:function(config){
     	  config=config||{};
@@ -8,12 +8,11 @@ Thang.view.system.grid.UserGrid=Ext.extend(Ext.grid.GridPanel,{
         var store=new Ext.data.JsonStore({
                                               autoDestroy:true,
                                               autoLoad:false,
-                                              url:'sys/user/list',
-                                              baseParams:config.params,
+                                              url:'sys/role/list',
                                               root:'data',
                                               idProperty:'id',
                                               totalProperty:'total',
-                                              fields:[{name:'id',type:'int'},'userName','sex','loginName','loginPass','birth','dept','opt']
+                                              fields:[{name:'id',type:'int'},'name','opt']
                                          });
 
     	  Ext.apply(this,config,{store:store});//apply end
@@ -28,45 +27,28 @@ Thang.view.system.grid.UserGrid=Ext.extend(Ext.grid.GridPanel,{
             hidden:true,
         		dataIndex:'id'
         	},{
-        		header:'用户名',
+        		header:'角色名称',
             type:'string',
-        		dataIndex:'userName'
+        		dataIndex:'name'
         	},{
-        		header:'性别',
-        		dataIndex:'sex',
-        		renderer:this.sexRender     			
-        	},{
-        		header:'登陆名',
-        		dataIndex:'loginName'
-        	},{
-             header:'登陆密码',
-             dataIndex:'loginPass',
-             hidden:true
-          },{
-        		header:'出生日期',
-        		dataIndex:'birth'
-        	},{
-             header:'部门',
-             hidden:true,
-             dataIndex:'dept'
-          },{
         		header:'备注',
-        		dataIndex:'opt'
+            type:'string',
+        		dataIndex:'opt'     			
         	}],
           tbar:[{
                     text:Ext.bigFont('新增',true),
                     iconCls:'icon-add',
-                    handler:this.addUser,
+                    handler:this.addRole,
                     scope:this
                   },'-',{
                     text:Ext.bigFont('删除',true),
                     iconCls:'icon-delete',
-                    handler:this.deleteUser,
+                    handler:this.deleteRole,
                     scope:this
                   },'-',{
                      text:Ext.bigFont('修改',true),
                      iconCls:'icon-calculator_edit',
-                     handler:this.updateUser,
+                     handler:this.updateRole,
                      scope:this
                   },{
                      text:Ext.bigFont('刷新',true),
@@ -104,19 +86,10 @@ Thang.view.system.grid.UserGrid=Ext.extend(Ext.grid.GridPanel,{
         });//call end
 
     },//constructor end
-    sexRender:function(data){
-        if('0'==data){
-           return '女';
-        }else if('1'==data){
-           return '男';
-        }else{
-           return '未登记';
-        }
-    },
     setBaseParam:function(name,mix){//显示该模块前先设置参数
         this.getStore().setBaseParam(name,mix);
     },
-    addUser:function(){
+    addRole:function(){
       var userForm=new Thang.view.system.form.UserForm({id:'userForm'});
                         userForm.setValues({dept:this.getStore().baseParams.dept_id});
                         userForm.show();
@@ -124,7 +97,7 @@ Thang.view.system.grid.UserGrid=Ext.extend(Ext.grid.GridPanel,{
                             this.getStore().reload();
                         },this);
     },
-    updateUser:function(){
+    updateRole:function(){
         var userForm=new Thang.view.system.form.UserForm({id:'userForm'});
                         var record=this.getSelectionModel().getSelected();
                         userForm.loadRecord(record);
@@ -133,7 +106,7 @@ Thang.view.system.grid.UserGrid=Ext.extend(Ext.grid.GridPanel,{
                             this.getStore().reload();
                         });
     },
-    deleteUser:function(){
+    deleteRole:function(){
         Ext.Msg.confirm('警告','您确定要删除吗？',function(txt){
                             if('yes'==txt){
                                   var record=this.getSelectionModel().getSelected();

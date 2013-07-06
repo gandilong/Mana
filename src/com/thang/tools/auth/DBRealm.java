@@ -47,10 +47,9 @@ public class DBRealm extends AuthorizingRealm{
 	@Override
 	protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authcToken) throws AuthenticationException {
 		UsernamePasswordToken token = (UsernamePasswordToken) authcToken;
-		User user=userService.getUserByName("admin");
+		User user=userService.getUserByName(token.getUsername());
 		token.setRememberMe(true);
 		if (null!=user) {
-			//byte[] salt = EncodeUtils.decodeHex(user.getSalt());
 			return new SimpleAuthenticationInfo(new ShiroUser(String.valueOf(user.getId()), user.getUserName(), user.getLoginName()),user.getLoginPass(),getName());
 		} 
 		return null;

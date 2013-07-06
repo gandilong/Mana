@@ -7,15 +7,19 @@ Thang.view.center.Center=Ext.extend(Ext.Panel,{
          config=config||{};
          Ext.apply(this,config);
          Thang.view.center.Center.superclass.constructor.call(this,{
-         	                             layout:'fit',
+         	                             layout:'card',
                                          region:'center',
-                                         tbar:[{
-                                                    text:Ext.bigFont('刷新',true),
-                                                    iconCls:'icon-arrow_refresh',
-                                                    handler:function(btn,evnt){
-                                                    	btn.findParentByType('centerpanel').getUpdater().refresh();
-                                                    }
-                                             }]//tbar end
+                                         height:450
+                                       
          });         
-	}
+	},
+    reload:function(){
+          this.getUpdater().refresh();
+    },
+    hasItem:function(xtype){
+        return this.findByType(xtype).length>0
+    },
+    getItem:function(xtype){
+        return this.findByType(xtype)[0];
+    }
 });

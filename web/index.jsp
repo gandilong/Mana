@@ -77,7 +77,7 @@
 <div class="row">
 	<div class="span6">
 		<img src="<%=contextPath %>/img/theme_editor.png" class="pull-left" alt="面向前端开发者">
-		<h2>面向前端开发者</h2>
+		<h2>面向室内办公人员</h2>
 		<p>使用我们的界面生成器能生成更高质量的<strong>HTML5</strong>代码。</p>
 		<p>依赖于组件化的 <a href="http://twitter.github.io/bootstrap/">Bootstrap</a>,  这款足够强大的前端框架。</p>
 		<p>使你所有的设计具备<strong>响应式CSS</strong>和<strong>自适应布局</strong>的特性</p>
