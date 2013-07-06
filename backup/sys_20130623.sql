@@ -23,9 +23,11 @@ CREATE TABLE `sys_dept_info` (
   `manager` varchar(36) DEFAULT NULL,
   `opt` varchar(225) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
 /*Data for the table `sys_dept_info` */
+
+insert  into `sys_dept_info`(`id`,`num`,`name`,`manager`,`opt`) values (1,'001','Administrator','1','root');
 
 /*Table structure for table `sys_resource_info` */
 
@@ -39,9 +41,11 @@ CREATE TABLE `sys_resource_info` (
   `leaf` char(1) DEFAULT NULL COMMENT '0 is leaf,1 has leaf',
   `opt` varchar(225) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=latin1;
 
 /*Data for the table `sys_resource_info` */
+
+insert  into `sys_resource_info`(`id`,`name`,`url`,`parent`,`leaf`,`opt`) values (1,'system','','','1','system model'),(2,'archive','','','1','archive model'),(3,'info','','','1','info model'),(4,'person','','','1','person model'),(5,'office','','','1','office model'),(6,'home','','','1','home model'),(7,'dept','','1','1','dept model'),(8,'user','','1','1','user model'),(9,'insert','','8','0','user insert'),(10,'delete','','8','0','user delete'),(11,'update','','8','0','user update'),(12,'update','','7','0','dept update'),(13,'delete','','7','0','dept delete'),(14,'insert','','7','0','dept insert');
 
 /*Table structure for table `sys_role_info` */
 
@@ -51,9 +55,11 @@ CREATE TABLE `sys_role_info` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
 /*Data for the table `sys_role_info` */
+
+insert  into `sys_role_info`(`id`,`name`) values (1,'root'),(2,'user');
 
 /*Table structure for table `sys_role_resource_info` */
 
@@ -64,9 +70,11 @@ CREATE TABLE `sys_role_resource_info` (
   `role` varchar(36) DEFAULT NULL,
   `resource` varchar(36) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
 
 /*Data for the table `sys_role_resource_info` */
+
+insert  into `sys_role_resource_info`(`id`,`role`,`resource`) values (1,'2','1'),(2,'2','2'),(3,'2','3'),(4,'2','4'),(5,'2','5'),(6,'2','6');
 
 /*Table structure for table `sys_user_info` */
 
@@ -98,9 +106,11 @@ CREATE TABLE `sys_user_role_info` (
   `user` varchar(36) DEFAULT NULL,
   `role` varchar(36) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
 /*Data for the table `sys_user_role_info` */
+
+insert  into `sys_user_role_info`(`id`,`user`,`role`) values (1,'1','1');
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
