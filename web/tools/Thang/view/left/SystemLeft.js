@@ -84,7 +84,8 @@ Thang.view.left.SystemLeft=Ext.extend(Ext.Panel,{
                             var centerPanel=this.findParentByType('systempanel').findByType('centerpanel')[0];
                             if('role'==node.id){
                                 if(centerPanel.hasItem('rolegrid')){
-
+                                    centerPanel.layout.setActiveItem('roleGrid');
+                                    centerPanel.getItem('rolegrid').getStore().load();
                                 }else{
                                     centerPanel.add(new Thang.view.system.grid.RoleGrid({id:'roleGrid'}));
                                     centerPanel.doLayout();

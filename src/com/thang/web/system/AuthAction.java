@@ -34,13 +34,11 @@ public class AuthAction {
 	@Autowired
 	private DBExecutor dbe;
 	ObjectMapper mapper = new ObjectMapper();
-	
-
-  
+	  
     //返回部门的查询数据
     @RequestMapping("sys/role/list")
 	public void roleList(HttpServletResponse response){
-		List<Role> roles=dbe.list(Role.class);
+		List<Role> roles=dbe.list(Role.class,new Condition(Role.class,true));
 		response.setContentType("text/html;charset=UTF-8");
     	try {
     		JsonGenerator json=mapper.getFactory().createGenerator(response.getWriter());
@@ -57,7 +55,52 @@ public class AuthAction {
     	}
 	}
 
-    
+    @ResponseBody
+    @RequestMapping(value="sys/role/save",method = RequestMethod.POST)
+    public String roleSave(Role role,Model model){
+        try{
+            if(0!=role.getId()){
+               dbe.update(role);
+            }else{
+               dbe.insert(role);    
+            }
+            
+        }catch(Exception e){
+           return "{success:false,msg:'1'}";
+        }
+        return "{success:true,msg:'0'}";
+    }
+
+    @ResponseBody
+    @RequestMapping(value="sys/role/delete",method = RequestMethod.POST)
+    public String roleDelete(@RequestParam("role_id")long role_id,Model model){
+        try{
+            dbe.delete(Role.class,role_id);
+        }catch(Exception e){
+           return "{success:false,msg:'1'}";
+        }
+        return "{success:true,msg:'0'}";
+    }
+
+    //1表示存在，0表示不存在
+    @ResponseBody
+    @RequestMapping(value="sys/role/exist",method = RequestMethod.POST)
+    public String roleExist(@RequestParam("name")String name,Model model){
+        try{
+            if(null!=name&&name.length()>0){
+                List<Role> list=dbe.list(Role.class,new Condition(Role.class,true).eq("name",name));
+                if(null!=list&&list.size()>0){
+                    return "{success:true,msg:'1'}";
+                }
+            }
+            
+        }catch(Exception e){
+           return "{success:false,msg:'1'}";
+        }
+        return "{success:true,msg:'0'}";
+    }
+
+   
 
 	
 }

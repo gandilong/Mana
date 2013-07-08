@@ -19,7 +19,9 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.thang.entity.system.Dept;
+import com.thang.entity.system.Role;
 import com.thang.entity.system.User;
+import com.thang.entity.system.UserRole;
 import com.thang.executor.DBExecutor;
 import com.thang.model.Condition;
 import com.thang.tools.model.Tree;
@@ -41,7 +43,7 @@ public class UserAction {
     //返回部门的查询数据
     @RequestMapping("sys/dept/list")
 	public void deptList(HttpServletResponse response){
-		List<Dept> depts=dbe.list(Dept.class);
+		List<Dept> depts=dbe.list(Dept.class,new Condition(Dept.class,true));
 		response.setContentType("text/html;charset=UTF-8");
     	try {
     		JsonGenerator json=mapper.getFactory().createGenerator(response.getWriter());
@@ -67,7 +69,7 @@ public class UserAction {
         if(null!=depts&&depts.size()>0){
         	tree=new ArrayList<Tree>();
         	for(Dept dept:depts){
-    		    tree.add(new Tree(String.valueOf(dept.getId()),dept.getName(),true));	
+    		    tree.add(new Tree(String.valueOf(dept.getId()),dept.getName(),true,false));	
     		}
         	
     		try {
@@ -166,6 +168,65 @@ public class UserAction {
         	
         }
 	}
+
+    //返回用户列表menu所需要的数据。
+    @RequestMapping("sys/user/menu")
+    public void userMenu(@RequestParam("user_id") String user_id,@RequestParam("dept_id") long dept_id,@RequestParam("role_id") long role_id,HttpServletResponse response){
+
+        List<UserRole> user_roles=dbe.list(UserRole.class,new Condition(UserRole.class,false).eq("user",user_id));
+        
+        List<Role>  roles=dbe.list(Role.class,new Condition(Role.class,false).in("id",null));
+        List<Dept> depts=dbe.list(Dept.class);
+        List<Tree> deptTree=null;
+        List<Tree> authTree=null;
+        response.setContentType("text/html;charset=UTF-8");
+        if(null!=depts&&depts.size()>0){
+            deptTree=new ArrayList<Tree>();
+            for(Dept dept:depts){
+                if(dept_id==dept.getId()){
+                    deptTree.add(new Tree(String.valueOf(dept.getId()),dept.getName(),true,true)); 
+                }else{
+                    deptTree.add(new Tree(String.valueOf(dept.getId()),dept.getName(),true,false)); 
+                }
+                
+            }
+            
+            try {
+                JsonGenerator json=mapper.getFactory().createGenerator(response.getWriter());
+                json.writeStartObject();
+                json.writeObjectField("dept",deptTree);
+                json.writeEndObject();
+                json.close();
+            } catch (JsonGenerationException e) {
+                e.printStackTrace();
+            } catch (JsonMappingException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            
+        }
+
+
+        List<User> users=dbe.list(User.class, new Condition(User.class,true).eq("dept", dept_id));
+        response.setContentType("text/html;charset=UTF-8");
+        if(null!=users&&users.size()>0){
+            try {
+                JsonGenerator json=mapper.getFactory().createGenerator(response.getWriter());
+                json.writeStartObject();
+                json.writeObjectField("data",users);
+                json.writeEndObject();
+                json.close();
+            } catch (JsonGenerationException e) {
+                e.printStackTrace();
+            } catch (JsonMappingException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            
+        }
+    }
 
 	
 }

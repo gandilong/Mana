@@ -127,19 +127,27 @@ Thang.view.system.grid.UserGrid=Ext.extend(Ext.grid.GridPanel,{
     updateUser:function(){
         var userForm=new Thang.view.system.form.UserForm({id:'userForm'});
                         var record=this.getSelectionModel().getSelected();
-                        userForm.loadRecord(record);
-                        userForm.show();
-                        userForm.on('destroy',function(comp){
-                            this.getStore().reload();
-                        });
+                        if(record){
+                           userForm.loadRecord(record);
+                           userForm.show();
+                           userForm.on('destroy',function(comp){
+                              this.getStore().reload();
+                           });
+                        }else{
+                           Ext.Msg.alert('提示','请选择一条记录！');
+                        }
     },
     deleteUser:function(){
         Ext.Msg.confirm('警告','您确定要删除吗？',function(txt){
                             if('yes'==txt){
                                   var record=this.getSelectionModel().getSelected();
+                                  if(!record){
+                                     Ext.Msg.alert('提示','请选择一条记录！');
+                                     return;
+                                  }
                                   Ext.Ajax.request({
                                      url:'sys/user/delete',
-                                     success:function(){
+                                     success:function(response,opt){
                                          this.getStore().reload();
                                      }, 
                                      failure:function(){
@@ -196,7 +204,8 @@ Thang.view.system.grid.UserGrid=Ext.extend(Ext.grid.GridPanel,{
                                handler:this.addUser,
                                scope:this
                             },{
-                               text:Ext.bigFont('设置权限')
+                               text:Ext.bigFont('设置权限'),
+                               menu:auth_menus
                             },'-',
                             {
                                id:'toDept',

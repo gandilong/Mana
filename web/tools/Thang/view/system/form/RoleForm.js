@@ -7,7 +7,7 @@ Thang.view.system.form.RoleForm=Ext.extend(Ext.Window,{
      	 Ext.apply(this,config);
          Thang.view.system.form.RoleForm.superclass.constructor.call(this,{
          	layout:'fit',
-         	height:150,
+         	height:210,
          	width:450,
          	autoShow:false,
          	plain:true,
@@ -30,7 +30,39 @@ Thang.view.system.form.RoleForm=Ext.extend(Ext.Window,{
                 },{
                 	name:'name',
                 	allowBlank:false,
-                	fieldLabel:'角色名'
+                	fieldLabel:'角色标示',
+                    regex:/^[a-z|A-Z]+$/,
+                    regexText:'只能输入英文字符！',
+                    validationEvent:'blur',
+                    validator:function(value){
+                        var msg;
+                        if(!value||''==value){
+                            return '标示不能为空！';
+                        }
+                        Ext.Ajax.request({
+                            async:false,
+                            url:'sys/role/exist',
+                            success:function(response,opt){
+                               var result=Ext.decode(response.responseText);
+                               if('1'==result.msg){
+                                   msg='标示己被使用！';
+                                   this.markInvalid('标示己被使用！');
+                               }else{
+                                   msg=true;
+                               }
+                            },
+                            failure:function(){
+                                Ext.Msg.alert('提示','请求出错！');
+                            },
+                            params:{'name':value},
+                            scope:this
+                        });
+                        return msg;
+                    }
+                },{
+                    name:'title',
+                    allowBlank:false,
+                    fieldLabel:'角色名称'
                 },{
                 	name:'opt',
                 	xtype:'textarea',

@@ -7,14 +7,15 @@ import com.thang.model.mate.Table;
 @Table("sys_role_info")
 public class Role {
 
-	private String id;
+	private long id;
 	private String name;
+	private String title;
 	private String opt;
 	
-	public String getId() {
+	public long getId() {
 		return id;
 	}
-	public void setId(String id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 	public String getName() {
@@ -30,4 +31,12 @@ public class Role {
 		this.opt = opt;
 	}
 	
+	public String getTitle() {
+		return title;
+	}
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+
 }

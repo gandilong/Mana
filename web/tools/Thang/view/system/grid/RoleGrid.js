@@ -12,7 +12,7 @@ Thang.view.system.grid.RoleGrid=Ext.extend(Ext.grid.GridPanel,{
                                               root:'data',
                                               idProperty:'id',
                                               totalProperty:'total',
-                                              fields:[{name:'id',type:'int'},'name','opt']
+                                              fields:[{name:'id',type:'int'},'name','title','opt']
                                          });
 
     	  Ext.apply(this,config,{store:store});//apply end
@@ -27,9 +27,13 @@ Thang.view.system.grid.RoleGrid=Ext.extend(Ext.grid.GridPanel,{
             hidden:true,
         		dataIndex:'id'
         	},{
+             type:'string',
+             hidden:true,
+             dataIndex:'name'
+          },{
         		header:'角色名称',
             type:'string',
-        		dataIndex:'name'
+        		dataIndex:'title'
         	},{
         		header:'备注',
             type:'string',
@@ -69,11 +73,11 @@ Thang.view.system.grid.RoleGrid=Ext.extend(Ext.grid.GridPanel,{
                    grid.getSelectionModel().selectRow(rowIndex);
                    grid.rowContextMenu.showAt(evnt.getXY());
                    var dept_id=parseInt(grid.getStore().baseParams.dept_id);//dept's id equals checkItem's id
-                   grid.rowContextMenu.get('toDept').menu.get(dept_id).setChecked(true);
+                   //grid.rowContextMenu.get('toDept').menu.get(dept_id).setChecked(true);
                    evnt.stopEvent();
               },
               'containerdblclick':function(grid,evnt){
-                  grid.addUser();
+                  grid.addRole();
                   evnt.stopEvent();
               },
               'containercontextmenu':function(grid,evnt){
@@ -90,35 +94,40 @@ Thang.view.system.grid.RoleGrid=Ext.extend(Ext.grid.GridPanel,{
         this.getStore().setBaseParam(name,mix);
     },
     addRole:function(){
-      var userForm=new Thang.view.system.form.UserForm({id:'userForm'});
-                        userForm.setValues({dept:this.getStore().baseParams.dept_id});
-                        userForm.show();
-                        userForm.on('destroy',function(comp){
+      var roleForm=new Thang.view.system.form.RoleForm({id:'roleForm'});
+                        roleForm.setValues({dept:this.getStore().baseParams.dept_id});
+                        roleForm.show();
+                        roleForm.on('destroy',function(comp){
                             this.getStore().reload();
                         },this);
     },
     updateRole:function(){
-        var userForm=new Thang.view.system.form.UserForm({id:'userForm'});
+        var roleForm=new Thang.view.system.form.RoleForm({id:'roleForm'});
                         var record=this.getSelectionModel().getSelected();
-                        userForm.loadRecord(record);
-                        userForm.show();
-                        userForm.on('destroy',function(comp){
-                            this.getStore().reload();
-                        });
+                        if(record){
+                           roleForm.loadRecord(record);
+                           roleForm.show();
+                           roleForm.on('destroy',function(comp){
+                              this.getStore().reload();
+                           },this);
+                        }else{
+                          Ext.Msg.alert('提示','请选择一条记录！');
+                        }
+                        
     },
     deleteRole:function(){
         Ext.Msg.confirm('警告','您确定要删除吗？',function(txt){
                             if('yes'==txt){
                                   var record=this.getSelectionModel().getSelected();
                                   Ext.Ajax.request({
-                                     url:'sys/user/delete',
+                                     url:'sys/role/delete',
                                      success:function(){
                                          this.getStore().reload();
                                      }, 
                                      failure:function(){
                                          Ext.Msg.alert('操作提示','删除失败！');
                                      },
-                                     params: {user_id:record.get('id')},
+                                     params: {role_id:record.get('id')},
                                      scope:this
                                   });//ajax end
                             }// if end
@@ -168,13 +177,7 @@ Thang.view.system.grid.RoleGrid=Ext.extend(Ext.grid.GridPanel,{
                                text:Ext.bigFont('新增'),
                                handler:this.addUser,
                                scope:this
-                            },{
-                               text:Ext.bigFont('设置权限')
-                            },'-',
-                            {
-                               id:'toDept',
-                               text:Ext.bigFont('转到部门'),menu:dept_menus
-                            },'-',
+                            },'-',            
                             {
                                  text:Ext.bigFont('修改'),
                                  handler:this.updateUser,
