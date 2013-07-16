@@ -1,17 +1,6 @@
-#Sat Jun 15 05:08:02 CST 2013
+#Mon Jul 15 18:02:39 CST 2013
 eclipse.preferences.version=1
 encoding//web/WEB-INF/page/application/application.jsp=UTF-8
 encoding//web/WEB-INF/page/login.jsp=UTF-8
-encoding//web/tools/comp/ArchiveView.js=UTF-8
-encoding//web/tools/comp/BaseView.js=UTF-8
-encoding//web/tools/comp/Config.js=UTF-8
-encoding//web/tools/comp/HomeView.js=UTF-8
-encoding//web/tools/comp/InfoView.js=UTF-8
-encoding//web/tools/comp/LoginWindow.js=UTF-8
-encoding//web/tools/comp/MainView.js=UTF-8
-encoding//web/tools/comp/OfficeView.js=UTF-8
-encoding//web/tools/comp/PersonView.js=UTF-8
-encoding//web/tools/comp/Power.js=UTF-8
-encoding//web/tools/comp/SystemView.js=UTF-8
-encoding//web/tools/comp/Utils.js=UTF-8
+encoding//web/include/taglibs.jsp=UTF-8
 encoding/<project>=UTF-8

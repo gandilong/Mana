@@ -1,7 +1,6 @@
 package com.thang.web.system;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
@@ -19,7 +18,6 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.thang.entity.system.Role;
-import com.thang.entity.system.User;
 import com.thang.executor.DBExecutor;
 import com.thang.model.Condition;
 

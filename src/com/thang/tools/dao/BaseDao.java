@@ -1,4 +1,4 @@
-package com.thang.dao;
+package com.thang.tools.dao;
 
 import java.util.List;
 

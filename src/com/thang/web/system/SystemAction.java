@@ -8,9 +8,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.thang.dao.BaseDao;
 import com.thang.entity.system.Dept;
 import com.thang.entity.system.User;
+import com.thang.tools.dao.BaseDao;
 
 @Controller
 public class SystemAction {

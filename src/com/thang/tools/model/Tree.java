@@ -5,15 +5,13 @@ public class Tree {
 	private String id;
 	private String text;
 	private boolean leaf=false;
-	private boolean checked=false;
 	
 	public Tree(){}
 	
-	public Tree(String id,String text,boolean leaf,boolean checked){
+	public Tree(String id,String text,boolean leaf){
 		this.id=id;
 		this.text=text;
 		this.leaf=leaf;
-		this.checked=checked;
 	}
 	
 	public String getId() {
@@ -35,14 +33,4 @@ public class Tree {
 		this.leaf = leaf;
 	}
 
-	public boolean isChecked() {
-		return checked;
-	}
-	public void setChecked(boolean checked) {
-		this.checked = checked;
-	}
-	
-	
-	
-	
 }

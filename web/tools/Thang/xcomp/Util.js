@@ -57,6 +57,8 @@ Ext.applyIf(Ext,{
              "../tools/Thang/view/system/form/UserForm.js",
              "../tools/Thang/view/system/form/DeptForm.js",
              "../tools/Thang/view/system/form/RoleForm.js",
+
+             "../tools/Thang/xcomp/DeptMenu.js",
 		];
 		Ext.Loader.load(files,function(){
 			console.log('model load ok !');
@@ -68,6 +70,8 @@ Ext.applyIf(Ext,{
 			Ext.reg('deptform',Thang.view.system.form.DeptForm);
 			Ext.reg('userform',Thang.view.system.form.UserForm);
 			Ext.reg('roleform',Thang.view.system.form.RoleForm);
+
+			Ext.reg('deptmenu',Thang.DeptMenu);
 		},window);
 	}
 

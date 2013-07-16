@@ -21,9 +21,9 @@ import com.fasterxml.jackson.core.JsonGenerator;
 import com.thang.entity.system.Dept;
 import com.thang.entity.system.Role;
 import com.thang.entity.system.User;
-import com.thang.entity.system.UserRole;
 import com.thang.executor.DBExecutor;
 import com.thang.model.Condition;
+import com.thang.tools.model.Menu;
 import com.thang.tools.model.Tree;
 
 /**
@@ -69,7 +69,7 @@ public class UserAction {
         if(null!=depts&&depts.size()>0){
         	tree=new ArrayList<Tree>();
         	for(Dept dept:depts){
-    		    tree.add(new Tree(String.valueOf(dept.getId()),dept.getName(),true,false));	
+    		    tree.add(new Tree(String.valueOf(dept.getId()),dept.getName(),true));	
     		}
         	
     		try {
@@ -171,52 +171,33 @@ public class UserAction {
 
     //返回用户列表menu所需要的数据。
     @RequestMapping("sys/user/menu")
-    public void userMenu(@RequestParam("user_id") String user_id,@RequestParam("dept_id") long dept_id,@RequestParam("role_id") long role_id,HttpServletResponse response){
+    public void userMenu(HttpServletResponse response){
+        List<Role>  roles=dbe.list(Role.class);//所有角色
+        List<Dept>  depts=dbe.list(Dept.class);//所有部门
 
-        List<UserRole> user_roles=dbe.list(UserRole.class,new Condition(UserRole.class,false).eq("user",user_id));
-        
-        List<Role>  roles=dbe.list(Role.class,new Condition(Role.class,false).in("id",null));
-        List<Dept> depts=dbe.list(Dept.class);
-        List<Tree> deptTree=null;
-        List<Tree> authTree=null;
+        List<Menu> deptMenu=null;
+        List<Menu> authMenu=null;
         response.setContentType("text/html;charset=UTF-8");
         if(null!=depts&&depts.size()>0){
-            deptTree=new ArrayList<Tree>();
+            deptMenu=new ArrayList<Menu>();
             for(Dept dept:depts){
-                if(dept_id==dept.getId()){
-                    deptTree.add(new Tree(String.valueOf(dept.getId()),dept.getName(),true,true)); 
-                }else{
-                    deptTree.add(new Tree(String.valueOf(dept.getId()),dept.getName(),true,false)); 
-                }
-                
+                deptMenu.add(new Menu(String.valueOf(dept.getId()),dept.getName(),"dept",false)); 
+            }
+
+
+            authMenu=new ArrayList<Menu>();
+            for(Role role:roles){
+                 authMenu.add(new Menu(String.valueOf(role.getId()),role.getTitle(),null,false)); 
             }
             
             try {
                 JsonGenerator json=mapper.getFactory().createGenerator(response.getWriter());
                 json.writeStartObject();
-                json.writeObjectField("dept",deptTree);
+                json.writeObjectField("dept",deptMenu);
+                json.writeObjectField("role",authMenu);
                 json.writeEndObject();
                 json.close();
-            } catch (JsonGenerationException e) {
-                e.printStackTrace();
-            } catch (JsonMappingException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            
-        }
 
-
-        List<User> users=dbe.list(User.class, new Condition(User.class,true).eq("dept", dept_id));
-        response.setContentType("text/html;charset=UTF-8");
-        if(null!=users&&users.size()>0){
-            try {
-                JsonGenerator json=mapper.getFactory().createGenerator(response.getWriter());
-                json.writeStartObject();
-                json.writeObjectField("data",users);
-                json.writeEndObject();
-                json.close();
             } catch (JsonGenerationException e) {
                 e.printStackTrace();
             } catch (JsonMappingException e) {

@@ -87,7 +87,7 @@ Thang.view.system.grid.UserGrid=Ext.extend(Ext.grid.GridPanel,{
                    grid.getSelectionModel().selectRow(rowIndex);
                    grid.rowContextMenu.showAt(evnt.getXY());
                    var dept_id=parseInt(grid.getStore().baseParams.dept_id);//dept's id equals checkItem's id
-                   grid.rowContextMenu.get('toDept').menu.get(dept_id).setChecked(true);
+                   grid.rowContextMenu.get('toDept').menu.get(dept_id+'_dept').setChecked(true);
                    evnt.stopEvent();
               },
               'containerdblclick':function(grid,evnt){
@@ -162,19 +162,23 @@ Thang.view.system.grid.UserGrid=Ext.extend(Ext.grid.GridPanel,{
     rowContextMenu:Ext.emptyFn,
     initMenu:function(){
        Ext.Ajax.request({
-             url: 'sys/dept/tree',
+             url: 'sys/user/menu',
              success: function(response,opts){
-                  depts = Ext.decode(response.responseText);
+                  data = Ext.decode(response.responseText);
+
                   var dept_menus=new Ext.menu.Menu();
+                  var role_menus=new Ext.menu.Menu();
+                  var deptMenu=new Thang.DeptMenu({id:'_dept',url:'sys/dept/tree',group:'dept'});
                   
-                  //add checkItem to dept_menus all scope is grid
-                  for(i in depts){
-                      if(depts[i].text){
+                  with(data){
+                    //add checkItem to dept_menus all scope is grid
+                    for(i in dept){
+                      if(dept[i].text){
                         dept_menus.addMenuItem({
-                                                id:depts[i].id,
+                                                id:dept[i].id+'_dept',
                                                 xtype:'menucheckitem',
                                                 group:'dept',
-                                                text:Ext.bigFont(depts[i].text),
+                                                text:Ext.bigFont(dept[i].text),
                                                 handler:function(self,e){
                                                    if(this.getStore().baseParams.dept_id!=self.id){
                                                        Ext.Ajax.request({
@@ -195,8 +199,39 @@ Thang.view.system.grid.UserGrid=Ext.extend(Ext.grid.GridPanel,{
                                                 },
                                                 scope:this
                                             });//add menus end
-                      }// if end
-                  }// for end
+                         }// if end
+                      }// for end
+
+                      for(k in role){
+                      if(role[k].text){
+                        role_menus.addMenuItem({
+                                                id:role[k].id+'_role',
+                                                xtype:'menucheckitem',
+                                                text:Ext.bigFont(role[k].text),
+                                                handler:function(self,e){
+                                                   if(this.getStore().baseParams.dept_id!=self.id){
+                                                       Ext.Ajax.request({
+                                                           url:'sys/user/save',
+                                                           params:{
+                                                               id:this.getSelectionModel().getSelected().get('id'),//here is user'id
+                                                               dept:self.id //menuItem's id equals dept's id
+                                                             },
+                                                           success:function(self,e){
+                                                               this.getStore().reload();
+                                                            },
+                                                            scope:this
+                                                       });//ajax end
+                                                   }else{
+                                                       Ext.Msg.alert('操作提示','该用户己在所选部门！');
+                                                   }
+                                                   
+                                                },
+                                                scope:this
+                                            });//add menus end
+                         }// if end
+                      }// for end
+
+                   }//with end
 
                   this.rowContextMenu=new Ext.menu.Menu({
                       items:[{
@@ -205,11 +240,12 @@ Thang.view.system.grid.UserGrid=Ext.extend(Ext.grid.GridPanel,{
                                scope:this
                             },{
                                text:Ext.bigFont('设置权限'),
-                               menu:auth_menus
+                               menu:role_menus
                             },'-',
                             {
                                id:'toDept',
-                               text:Ext.bigFont('转到部门'),menu:dept_menus
+                               text:Ext.bigFont('转到部门'),
+                               menu:deptMenu
                             },'-',
                             {
                                  text:Ext.bigFont('修改'),

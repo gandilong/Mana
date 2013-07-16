@@ -18,7 +18,7 @@ public class ExecTest {
 
 		CommandLine cmdLine = CommandLine.parse("java -version");
 		DefaultExecutor executor = new DefaultExecutor();
-		int exitValue = executor.execute(cmdLine);
+		 executor.execute(cmdLine);
 	}
 
 }
