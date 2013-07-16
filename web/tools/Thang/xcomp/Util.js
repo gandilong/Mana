@@ -34,10 +34,11 @@ Ext.applyIf(Ext,{
             console.log('load file ok !');
         },window);
 	},
-	init:function(){
+	loadModel:function(){
         //初始化一些模块
          Ext.ns('Thang.view','Thang.view.system.form','Thang.view.system.grid');
         //注册模块的xtype
+        Ext.reg('power',Thang.Power);
         Ext.reg('systempanel',Thang.view.System);
         Ext.reg('archivepanel',Thang.view.Archive);
         Ext.reg('personpanel',Thang.view.Person);
@@ -58,7 +59,7 @@ Ext.applyIf(Ext,{
              "../tools/Thang/view/system/form/DeptForm.js",
              "../tools/Thang/view/system/form/RoleForm.js",
 
-             "../tools/Thang/xcomp/DeptMenu.js",
+             "../tools/Thang/xcomp/XMenu.js",
 		];
 		Ext.Loader.load(files,function(){
 			console.log('model load ok !');
@@ -71,7 +72,7 @@ Ext.applyIf(Ext,{
 			Ext.reg('userform',Thang.view.system.form.UserForm);
 			Ext.reg('roleform',Thang.view.system.form.RoleForm);
 
-			Ext.reg('deptmenu',Thang.DeptMenu);
+			Ext.reg('xmenu',Thang.XMenu);
 		},window);
 	}
 

@@ -1,12 +1,12 @@
 //  工具组件
 Ext.ns("Thang");
 
-Thang.DeptMenu=Ext.extend(Ext.menu.Menu,{
+Thang.XMenu=Ext.extend(Ext.menu.Menu,{
 	                     
 		constructor:function(config){
 					 config=config||{};
 				     Ext.apply(this,config);
-				     Thang.DeptMenu.superclass.constructor.call(this);
+				     Thang.XMenu.superclass.constructor.call(this);
                       
                      this.initMenu(config);
                      
@@ -33,7 +33,8 @@ Thang.DeptMenu=Ext.extend(Ext.menu.Menu,{
                                             xtype:'menucheckitem',
                                             group:config.group,
                                             text:Ext.bigFont(menuData[i].text),
-                                            handler:handler
+                                            handler:handler,
+                                            scope:scope
 
                             });
                        }//if end

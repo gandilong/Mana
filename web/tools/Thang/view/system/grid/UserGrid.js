@@ -85,9 +85,12 @@ Thang.view.system.grid.UserGrid=Ext.extend(Ext.grid.GridPanel,{
               },
               'rowcontextmenu':function(grid,rowIndex,evnt){
                    grid.getSelectionModel().selectRow(rowIndex);
-                   grid.rowContextMenu.showAt(evnt.getXY());
+                   
                    var dept_id=parseInt(grid.getStore().baseParams.dept_id);//dept's id equals checkItem's id
                    grid.rowContextMenu.get('toDept').menu.get(dept_id+'_dept').setChecked(true);
+                   
+                   
+                   grid.rowContextMenu.showAt(evnt.getXY());//显示菜单
                    evnt.stopEvent();
               },
               'containerdblclick':function(grid,evnt){
@@ -132,7 +135,7 @@ Thang.view.system.grid.UserGrid=Ext.extend(Ext.grid.GridPanel,{
                            userForm.show();
                            userForm.on('destroy',function(comp){
                               this.getStore().reload();
-                           });
+                           },this);
                         }else{
                            Ext.Msg.alert('提示','请选择一条记录！');
                         }
@@ -161,106 +164,56 @@ Thang.view.system.grid.UserGrid=Ext.extend(Ext.grid.GridPanel,{
     },
     rowContextMenu:Ext.emptyFn,
     initMenu:function(){
-       Ext.Ajax.request({
-             url: 'sys/user/menu',
-             success: function(response,opts){
-                  data = Ext.decode(response.responseText);
-
-                  var dept_menus=new Ext.menu.Menu();
-                  var role_menus=new Ext.menu.Menu();
-                  var deptMenu=new Thang.DeptMenu({id:'_dept',url:'sys/dept/tree',group:'dept'});
-                  
-                  with(data){
-                    //add checkItem to dept_menus all scope is grid
-                    for(i in dept){
-                      if(dept[i].text){
-                        dept_menus.addMenuItem({
-                                                id:dept[i].id+'_dept',
-                                                xtype:'menucheckitem',
-                                                group:'dept',
-                                                text:Ext.bigFont(dept[i].text),
-                                                handler:function(self,e){
-                                                   if(this.getStore().baseParams.dept_id!=self.id){
-                                                       Ext.Ajax.request({
-                                                           url:'sys/user/save',
-                                                           params:{
-                                                               id:this.getSelectionModel().getSelected().get('id'),//here is user'id
-                                                               dept:self.id //menuItem's id equals dept's id
-                                                             },
-                                                           success:function(self,e){
-                                                               this.getStore().reload();
-                                                            },
-                                                            scope:this
-                                                       });//ajax end
-                                                   }else{
-                                                       Ext.Msg.alert('操作提示','该用户己在所选部门！');
-                                                   }
-                                                   
-                                                },
-                                                scope:this
-                                            });//add menus end
-                         }// if end
-                      }// for end
-
-                      for(k in role){
-                      if(role[k].text){
-                        role_menus.addMenuItem({
-                                                id:role[k].id+'_role',
-                                                xtype:'menucheckitem',
-                                                text:Ext.bigFont(role[k].text),
-                                                handler:function(self,e){
-                                                   if(this.getStore().baseParams.dept_id!=self.id){
-                                                       Ext.Ajax.request({
-                                                           url:'sys/user/save',
-                                                           params:{
-                                                               id:this.getSelectionModel().getSelected().get('id'),//here is user'id
-                                                               dept:self.id //menuItem's id equals dept's id
-                                                             },
-                                                           success:function(self,e){
-                                                               this.getStore().reload();
-                                                            },
-                                                            scope:this
-                                                       });//ajax end
-                                                   }else{
-                                                       Ext.Msg.alert('操作提示','该用户己在所选部门！');
-                                                   }
-                                                   
-                                                },
-                                                scope:this
-                                            });//add menus end
-                         }// if end
-                      }// for end
-
-                   }//with end
-
-                  this.rowContextMenu=new Ext.menu.Menu({
-                      items:[{
-                               text:Ext.bigFont('新增'),
-                               handler:this.addUser,
-                               scope:this
-                            },{
-                               text:Ext.bigFont('设置权限'),
-                               menu:role_menus
-                            },'-',
-                            {
-                               id:'toDept',
-                               text:Ext.bigFont('转到部门'),
-                               menu:deptMenu
-                            },'-',
-                            {
-                                 text:Ext.bigFont('修改'),
-                                 handler:this.updateUser,
-                                 scope:this
-                            },{
-                                 text:Ext.bigFont('删除'),
-                                 handler:this.deleteUser,
-                                 scope:this
-                             }]
-                  })//end menu
-
-             },
-             failure: Ext.emptyFn,
-             scope:this
-       });//request end
+    	
+    	var deptMenu=new Thang.XMenu({id:'_dept',url:'sys/dept/tree',group:'dept',handler:function(self,e){
+      	  if(this.getStore().baseParams.dept_id!=self.id.split('_')[0]){
+                Ext.Ajax.request({
+                    url:'sys/user/save',
+                    params:{
+                        id:this.getSelectionModel().getSelected().get('id'),//here is user'id
+                        dept:self.id.split('_')[0] //menuItem's id equals dept's id
+                      },
+                    success:function(self,e){
+                        this.getStore().reload();
+                     },
+                     scope:this
+                });//ajax end
+            }else{
+                Ext.Msg.alert('操作提示','该用户己在所选部门！');
+            }
+        },scope:this});//dept menu end
+        
+        var roleMenu=new Thang.XMenu({id:'_role',url:'sys/role/menu',handler:function(self,e){
+      	  if(true){
+      		  alert('ok');
+      	  }
+        },scope:this});//role menu end
+        
+       
+        this.rowContextMenu=new Ext.menu.Menu({
+            items:[{
+                     text:Ext.bigFont('新增'),
+                     handler:this.addUser,
+                     scope:this
+                  },{
+                     text:Ext.bigFont('设置权限'),
+                     menu:roleMenu
+                  },'-',
+                  {
+                     id:'toDept',
+                     text:Ext.bigFont('转到部门'),
+                     menu:deptMenu
+                  },'-',
+                  {
+                       text:Ext.bigFont('修改'),
+                       handler:this.updateUser,
+                       scope:this
+                  },{
+                       text:Ext.bigFont('删除'),
+                       handler:this.deleteUser,
+                       scope:this
+                   }]
+        });//end menu
+    	
     }
 });

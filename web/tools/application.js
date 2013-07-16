@@ -4,9 +4,10 @@ Ext.onReady(function(){
     Ext.QuickTips.init();
     Ext.form.Field.prototype.msgTarget="side";
 
-    Ext.init();//延迟加载自定义模块
+    Ext.loadModel();//延迟加载自定义模块
 
-
+    
+    var power=new Thang.Power();//登陆用户权限信息
     var homeLeft=new Thang.view.left.HomeLeft({id:'homeLeft'});
 
     var infoLeft=new Thang.view.left.InfoLeft({id:'infoLeft'});
@@ -47,5 +48,5 @@ Ext.onReady(function(){
                           margins: '0 0 5 0'
 							    },main]
 		});
-    console.log('run ok');
+    console.log('app start ok!');
 },window);

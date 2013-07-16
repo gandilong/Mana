@@ -6,24 +6,26 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.fasterxml.jackson.core.JsonGenerationException;
+import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.core.JsonGenerator;
 import com.thang.entity.system.Dept;
-import com.thang.entity.system.Role;
 import com.thang.entity.system.User;
 import com.thang.executor.DBExecutor;
 import com.thang.model.Condition;
-import com.thang.tools.model.Menu;
+import com.thang.model.Page;
+import com.thang.tools.auth.ShiroUser;
 import com.thang.tools.model.Tree;
 
 /**
@@ -39,11 +41,18 @@ public class UserAction {
 	ObjectMapper mapper = new ObjectMapper();
 	
 
+	@ResponseBody
+	@RequestMapping("/sys/user/id")
+	public String getUserId(){
+		Subject sub=SecurityUtils.getSubject();
+		ShiroUser suser=(ShiroUser)sub.getPrincipal();
+		return suser.getId();
+	}
     
     //返回部门的查询数据
     @RequestMapping("sys/dept/list")
-	public void deptList(HttpServletResponse response){
-		List<Dept> depts=dbe.list(Dept.class,new Condition(Dept.class,true));
+	public void deptList(HttpServletResponse response,Page page){
+		List<Dept> depts=dbe.list(Dept.class,new Condition(Dept.class,page));
 		response.setContentType("text/html;charset=UTF-8");
     	try {
     		JsonGenerator json=mapper.getFactory().createGenerator(response.getWriter());
@@ -148,8 +157,8 @@ public class UserAction {
 	
     //返回指定部门的用户
 	@RequestMapping("sys/user/list")
-	public void deptUserList(@RequestParam("dept_id") String dept_id,HttpServletResponse response){
-		List<User> users=dbe.list(User.class, new Condition(User.class,true).eq("dept", dept_id));
+	public void deptUserList(@RequestParam("dept_id") String dept_id,Page page,HttpServletResponse response){
+		List<User> users=dbe.list(User.class, new Condition(User.class,page).eq("dept", dept_id));
         response.setContentType("text/html;charset=UTF-8");
         if(null!=users&&users.size()>0){
     		try {
@@ -169,45 +178,4 @@ public class UserAction {
         }
 	}
 
-    //返回用户列表menu所需要的数据。
-    @RequestMapping("sys/user/menu")
-    public void userMenu(HttpServletResponse response){
-        List<Role>  roles=dbe.list(Role.class);//所有角色
-        List<Dept>  depts=dbe.list(Dept.class);//所有部门
-
-        List<Menu> deptMenu=null;
-        List<Menu> authMenu=null;
-        response.setContentType("text/html;charset=UTF-8");
-        if(null!=depts&&depts.size()>0){
-            deptMenu=new ArrayList<Menu>();
-            for(Dept dept:depts){
-                deptMenu.add(new Menu(String.valueOf(dept.getId()),dept.getName(),"dept",false)); 
-            }
-
-
-            authMenu=new ArrayList<Menu>();
-            for(Role role:roles){
-                 authMenu.add(new Menu(String.valueOf(role.getId()),role.getTitle(),null,false)); 
-            }
-            
-            try {
-                JsonGenerator json=mapper.getFactory().createGenerator(response.getWriter());
-                json.writeStartObject();
-                json.writeObjectField("dept",deptMenu);
-                json.writeObjectField("role",authMenu);
-                json.writeEndObject();
-                json.close();
-
-            } catch (JsonGenerationException e) {
-                e.printStackTrace();
-            } catch (JsonMappingException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            
-        }
-    }
-
-	
 }

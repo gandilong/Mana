@@ -4,9 +4,12 @@ import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import com.thang.tools.auth.ShiroUser;
 
 @Controller
 public class IndexAction {
@@ -31,13 +34,14 @@ public class IndexAction {
      *系统登陆验证
      */
 	@RequestMapping(value="login",method = RequestMethod.POST)
-	public String login(@RequestParam("username")String uname,@RequestParam("password")String upass) {
+	public String login(@RequestParam("username")String uname,@RequestParam("password")String upass,Model model) {
 		UsernamePasswordToken token=new UsernamePasswordToken(uname, upass);
 		Subject sub=SecurityUtils.getSubject();
 		sub.login(token);
 		if(!sub.isAuthenticated()){
 			return "redirect:login";
 		}
+		model.addAttribute("user", ((ShiroUser)sub.getPrincipal()).getId());
 		return "redirect:app";
 	}
 	

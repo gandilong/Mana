@@ -6,6 +6,8 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Application Index</title>
 
+        <script type="text/javascript" src='<c:url value="/tools/Thang/xcomp/Power.js"></c:url>'></script>
+
         <script type="text/javascript" src='<c:url value="/tools/Thang/view/left/SystemLeft.js"></c:url>'></script>
         <script type="text/javascript" src='<c:url value="/tools/Thang/view/left/ArchiveLeft.js"></c:url>'></script>
         <script type="text/javascript" src='<c:url value="/tools/Thang/view/left/PersonLeft.js"></c:url>'></script>
@@ -29,13 +31,13 @@
         <style type="text/css">
                #header{
 				           height: 44px;
-					         background: url("${ctx}/tools/icons/main_title_bg.png") repeat-x; 
+					       background: url("${ctx}/tools/icons/main_title_bg.png") repeat-x; 
                }
 		    </style>
         
     </head>
     <body>
-        
+        <input id="user_id" type="hidden" value="${user}"/>
         <div id="header">
              <div style="float:left;">
                   <img style="margin-left:5px" src="${ctx}/tools/icons/office.png" height="48" width="50"></img>
