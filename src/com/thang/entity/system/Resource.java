@@ -1,12 +1,14 @@
 package com.thang.entity.system;
 
-import javax.persistence.Table;
+import com.thang.model.mate.Table;
 
-@Table(name="sys_resource_info")
+
+@Table("sys_resource_info")
 public class Resource {
 
 	private long id;
 	private String name;
+	private String title;
 	private int leaf;//0 is leaf and 1 has leaf
 	private String parent;
 	private String url;
@@ -23,6 +25,12 @@ public class Resource {
 	}
 	public void setName(String name) {
 		this.name = name;
+	}
+	public String getTitle() {
+		return title;
+	}
+	public void setTitle(String title) {
+		this.title = title;
 	}
 	public int getLeaf() {
 		return leaf;

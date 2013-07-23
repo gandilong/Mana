@@ -23,6 +23,7 @@ Thang.view.system.form.UserForm=Ext.extend(Ext.Window,{
                 	width:150
                 },
                 items:[{
+                    id:'id',
                 	name:'id',
                 	xtype:'hidden',
                     originalValue:'0',
@@ -54,9 +55,12 @@ Thang.view.system.form.UserForm=Ext.extend(Ext.Window,{
                 	allowBlank:false,
                 	fieldLabel:'出生日期'
                 },{
+                    id:'loginName',
                 	name:'loginName',
                 	allowBlank:false,
-                	fieldLabel:'登陆名'
+                	fieldLabel:'登陆名',
+                    regex:/^[a-z|A-Z]+$/,
+                    regexText:'只能输入英文字符！'
                 },{
                     id:'loginPass',
                 	name:'loginPass',
@@ -87,25 +91,7 @@ Thang.view.system.form.UserForm=Ext.extend(Ext.Window,{
                     var winForm=this.findParentByType('userform');
                     var form=winForm.findByType('form')[0];
                     if(form.getForm().isValid()){
-                       form.getForm().submit({
-                    	url:'sys/user/save',
-                    	waitTitle:'保存',
-                    	waitMsg:'保存到数据库...',
-                    	success:function(form, action){
-                            if('0'==action.result.msg){
-                               Ext.Msg.alert('操作提示','保存成功！',function(){
-                                    winForm.close();
-                               });
-                            }else{
-                               Ext.Msg.alert('操作提示','保存失败！',function(){
-                                    //winForm.close();
-                               });
-                            }
-                    	},
-                    	failure:function(form, action){
-					       Ext.Msg.alert('失败', '请求出错！');
-                    	}
-                      });//submit end
+                        UserFn.exist.call(winForm);
                     }// if end
                     
          		}
@@ -121,3 +107,54 @@ Thang.view.system.form.UserForm=Ext.extend(Ext.Window,{
      }
 
 });
+
+
+UserFn={
+    exist:function(){//认证用户是否存在，用loginName
+        var winForm=this;
+        var form=this.findByType('form')[0];
+        var bform=form.getForm();
+        Ext.Ajax.request({
+                            async:false,
+                            url:'sys/user/exist',
+                            success:function(response,opt){
+                               var result=Ext.decode(response.responseText);
+                               if('1'==result.msg){
+                                   msg='登陆名己被使用！';
+                                   this.findField('loginName').markInvalid('登陆名己被使用！');
+                               }else{
+                                    UserFn.submitForm.call(winForm);
+                               }// if end
+                            },//success end
+                            failure:function(){
+                                Ext.Msg.alert('提示','请求出错！');
+                            },
+                            params:{'id':bform.findField('id').getValue(),'name':bform.findField('loginName').getValue()},
+                            scope:bform
+                        });
+    },
+   submitForm:function(){//提交表单数据
+        var winForm=this;
+        var form=this.findByType('form')[0];
+        var bform=form.getForm();
+        bform.submit({
+                url:'sys/user/save',
+                waitTitle:'保存',
+                waitMsg:'保存到数据库...',
+                success:function(form, action){
+                         if('0'==action.result.msg){
+                                   Ext.Msg.alert('操作提示','保存成功！',function(){
+                                      winForm.close();
+                                   });
+                          }else{
+                                   Ext.Msg.alert('操作提示','保存失败！',function(){
+                                        winForm.close();
+                                    });
+                          }
+                },
+                failure:function(form, action){
+                           Ext.Msg.alert('失败', '请求出错！');
+                }
+        });//submit end
+   }
+};

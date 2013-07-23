@@ -61,18 +61,21 @@ public class ShiroUser implements Serializable{
 	 */
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
+		if (this == obj){
 			return true;
-		if (obj == null)
+		}else if (obj == null){
 			return false;
-		if (getClass() != obj.getClass())
+		}else if (getClass() != obj.getClass()){
 			return false;
+		}
 		ShiroUser other = (ShiroUser) obj;
-		if (loginName == null) {
-			if (other.loginName != null)
+		if(loginName == null){
+			if (other.loginName != null){
 				return false;
-		} else if (!loginName.equals(other.loginName))
-			return false;
+		    }else if(!loginName.equals(other.loginName)){
+			    return false;
+		    }
+		}
 		return true;
 	}
 	

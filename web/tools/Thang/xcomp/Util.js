@@ -54,10 +54,14 @@ Ext.applyIf(Ext,{
              "../tools/Thang/view/system/grid/UserGrid.js",
              "../tools/Thang/view/system/grid/DeptGrid.js",
              "../tools/Thang/view/system/grid/RoleGrid.js",
+             "../tools/Thang/view/system/grid/ResourceGrid.js",
 
              "../tools/Thang/view/system/form/UserForm.js",
              "../tools/Thang/view/system/form/DeptForm.js",
              "../tools/Thang/view/system/form/RoleForm.js",
+             "../tools/Thang/view/system/form/ResourceForm.js",
+
+             "../tools/Thang/view/center/Database.js",
 
              "../tools/Thang/xcomp/XMenu.js",
 		];
@@ -67,10 +71,14 @@ Ext.applyIf(Ext,{
             Ext.reg('deptgrid',Thang.view.system.grid.DeptGrid);
 			Ext.reg('usergrid',Thang.view.system.grid.UserGrid);
 			Ext.reg('rolegrid',Thang.view.system.grid.RoleGrid);
+			Ext.reg('resourcegrid',Thang.view.system.grid.ResourceGrid);
 
 			Ext.reg('deptform',Thang.view.system.form.DeptForm);
 			Ext.reg('userform',Thang.view.system.form.UserForm);
 			Ext.reg('roleform',Thang.view.system.form.RoleForm);
+			Ext.reg('resourceform',Thang.view.system.form.ResourceForm);
+
+			Ext.reg('database',Thang.view.center.Database);
 
 			Ext.reg('xmenu',Thang.XMenu);
 		},window);

@@ -9,9 +9,9 @@ public class Tree {
 	public Tree(){}
 	
 	public Tree(String id,String text,boolean leaf){
-		this.id=id;
-		this.text=text;
-		this.leaf=leaf;
+		setId(id);
+		setText(text);
+		setLeaf(leaf);
 	}
 	
 	public String getId() {
@@ -24,7 +24,7 @@ public class Tree {
 		return text;
 	}
 	public void setText(String text) {
-		this.text = text;
+		this.text = "<span style=\"font-size:13px\">"+text+"</span>";
 	}
 	public boolean isLeaf() {
 		return leaf;

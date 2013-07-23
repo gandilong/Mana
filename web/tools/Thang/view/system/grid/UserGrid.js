@@ -28,30 +28,40 @@ Thang.view.system.grid.UserGrid=Ext.extend(Ext.grid.GridPanel,{
             hidden:true,
         		dataIndex:'id'
         	},{
-        		header:'用户名',
+        		header:Ext.bigFont('用户名'),
             type:'string',
-        		dataIndex:'userName'
+        		dataIndex:'userName',
+            sortable:true,
+            width:180
         	},{
-        		header:'性别',
+        		header:Ext.bigFont('性别'),
         		dataIndex:'sex',
-        		renderer:this.sexRender     			
+        		renderer:this.sexRender,
+            sortable:true,
+            width:90     			
         	},{
-        		header:'登陆名',
-        		dataIndex:'loginName'
+        		header:Ext.bigFont('登陆名'),
+        		dataIndex:'loginName',
+            sortable:true,
+            width:180
         	},{
              header:'登陆密码',
              dataIndex:'loginPass',
              hidden:true
           },{
-        		header:'出生日期',
-        		dataIndex:'birth'
+        		header:Ext.bigFont('出生日期'),
+        		dataIndex:'birth',
+            sortable:true,
+            width:180
         	},{
-             header:'部门',
+             header:Ext.bigFont('部门'),
              hidden:true,
-             dataIndex:'dept'
+             dataIndex:'dept',
+             sortable:true
           },{
-        		header:'备注',
-        		dataIndex:'opt'
+        		header:Ext.bigFont('备注'),
+        		dataIndex:'opt',
+            width:450
         	}],
           tbar:[{
                     text:Ext.bigFont('新增',true),

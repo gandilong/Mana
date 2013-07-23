@@ -6,7 +6,7 @@ Thang.Power=Ext.extend(Object,{
          this.initData();
          Thang.Power.superclass.constructor.call(this);
      },
-     initData:function(user_id){
+     initData:function(){
      	Ext.Ajax.request({
      		url:'sys/user/id',
      		success:function(response,opt){
@@ -15,16 +15,23 @@ Thang.Power=Ext.extend(Object,{
      		                    url:'sys/user/auth',
      		                    params:{user_id:response.responseText},
      		                    success:function(response,opt){
-                                   alert(response.responseText);
+                                    this.data=response.responseText;
      		                    },
      		                   scope:this
      	                   });
-
                }
      		},
      		scope:this
      	});
      },
-     data:null
+     data:null,
+     hasRes:function(name){
+        for(d in data){
+            if(data[d]==name){
+                return true;
+            }
+        }
+        return false;
+     }
 
 });

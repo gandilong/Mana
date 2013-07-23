@@ -26,7 +26,7 @@
 
         <script type="text/javascript" src='<c:url value="/tools/Thang/view/Main.js"></c:url>'></script>
 
-        <script type="text/javascript" src='<c:url value="/tools/application.js"></c:url>'></script>
+        <script type="text/javascript" src='<c:url value="/tools/Application.js"></c:url>'></script>
         
         <style type="text/css">
                #header{

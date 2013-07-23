@@ -93,26 +93,68 @@ Thang.view.left.SystemLeft=Ext.extend(Ext.Panel,{
                                     centerPanel.getItem('rolegrid').getStore().load();
                                 }
                             }else if('resource'==node.id){
+                                if(centerPanel.hasItem('resourcegrid')){
+                                    centerPanel.layout.setActiveItem('resourceGrid');
+                                    centerPanel.getItem('resourcegrid').getStore().load();
+                                }else{
+                                    centerPanel.add(new Thang.view.system.grid.ResourceGrid({id:'resourceGrid'}));
+                                    centerPanel.doLayout();
+                                    centerPanel.layout.setActiveItem('resourceGrid');
+                                    centerPanel.getItem('resourcegrid').getStore().load();
+                                }
 
                             }else{}
                         }
                     }
                  },{//资源管理
-                    title:Ext.bigFont('资源管理',false,14),
+                    title:Ext.bigFont('系统功能',false,14),
                     autoScroll:true,
                     border:false,
                     iconCls:'icon-plugin',
                     xtype:'treepanel',
+                    rootVisible:false,
                     root:new Ext.tree.AsyncTreeNode({
                         text:Ext.bigFont('系统'),
-                        expanded:false,
+                        expanded:true,
                         children:[{
-                            text:Ext.bigFont('首页')
+                            text:Ext.bigFont('数据库'),
+                            children:[{
+                                text:Ext.bigFont('备份数据'),
+                                leaf:true
+                            },{
+                                text:Ext.bigFont('恢复数据'),
+                                leaf:true
+                            },{
+                                text:Ext.bigFont('执行SQL文件'),
+                                leaf:true
+                            },{
+                                text:Ext.bigFont('创建表'),
+                                leaf:true
+                            },{
+                                text:Ext.bigFont(''),
+                            }]
                         },{
-                           text:Ext.bigFont('办公管理') 
+                           text:Ext.bigFont('模板管理'),
+                           leaf:true
                         }]
-                    })
-                 }]//items end
+                    }),
+                  listeners:function(){
+                     'click':function(node,e){
+                          var centerPanel=this.findParentByType('systempanel').findByType('centerpanel')[0];
+                          if('database'==node.id){
+                              if(centerPanel.hasItem('database')){
+                                    centerPanel.layout.setActiveItem('database');
+                                    centerPanel.getItem('database').getStore().load();
+                                }else{
+                                    centerPanel.add(new Thang.view.system.grid.RoleGrid({id:'database'}));
+                                    centerPanel.doLayout();
+                                    centerPanel.layout.setActiveItem('database');
+                                    centerPanel.getItem('database').getStore().load();
+                                }
+                          }
+                     }
+                  }
+            }]//items end
         });
 	}//constructor end
 

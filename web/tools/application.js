@@ -8,6 +8,7 @@ Ext.onReady(function(){
 
     
     var power=new Thang.Power();//登陆用户权限信息
+    
     var homeLeft=new Thang.view.left.HomeLeft({id:'homeLeft'});
 
     var infoLeft=new Thang.view.left.InfoLeft({id:'infoLeft'});
@@ -49,4 +50,8 @@ Ext.onReady(function(){
 							    },main]
 		});
     console.log('app start ok!');
+    setTimeout(function(){
+      console.log(power.data);
+    },2000);
+        
 },window);

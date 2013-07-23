@@ -1,11 +1,11 @@
 Ext.ns('Thang.view.system.form');
 
-Thang.view.system.form.RoleForm=Ext.extend(Ext.Window,{
+Thang.view.system.form.ResourceForm=Ext.extend(Ext.Window,{
      
      constructor:function(config){
      	 config=config||{};
      	 Ext.apply(this,config);
-         Thang.view.system.form.RoleForm.superclass.constructor.call(this,{
+         Thang.view.system.form.ResourceForm.superclass.constructor.call(this,{
          	layout:'fit',
          	height:210,
          	width:450,
@@ -13,7 +13,7 @@ Thang.view.system.form.RoleForm=Ext.extend(Ext.Window,{
          	plain:true,
          	modal:true,
          	resizable:false,
-         	title:Ext.bigFont('角色表单'),
+         	title:Ext.bigFont('资源表单'),
          	items:[{
                 xtype:'form',
                 labelAlign:'right',
@@ -32,13 +32,13 @@ Thang.view.system.form.RoleForm=Ext.extend(Ext.Window,{
                     id:'name',
                 	name:'name',
                 	allowBlank:false,
-                	fieldLabel:'角色标示',
-                    regex:/^[a-z|A-Z]+$/,
+                	fieldLabel:'资源标示',
+                    regex:/^[a-z|_|A-Z|_]+$/,
                     regexText:'只能输入英文字符！'
                 },{
                     name:'title',
                     allowBlank:false,
-                    fieldLabel:'角色名称'
+                    fieldLabel:'资源名称'
                 },{
                 	name:'opt',
                 	xtype:'textarea',
@@ -52,15 +52,15 @@ Thang.view.system.form.RoleForm=Ext.extend(Ext.Window,{
          	buttons:[{
                 text:Ext.bigFont('重置'),
                 handler:function(btn,evnt){
-                	this.findParentByType('roleform').findByType('form')[0].getForm().reset();
+                	this.findParentByType('resourceform').findByType('form')[0].getForm().reset();
                 }
          	},{
          		text:Ext.bigFont('保存'),
          		handler:function(btn,evnt){
-                    var winForm=this.findParentByType('roleform');
+                    var winForm=this.findParentByType('resourceform');
                     var form=winForm.findByType('form')[0];
                     if(form.getForm().isValid()){
-                       RoleFn.exist.call(winForm);
+                       ResourceFn.exist.call(winForm);
                     }// if end
                     
          		}
@@ -77,21 +77,21 @@ Thang.view.system.form.RoleForm=Ext.extend(Ext.Window,{
 
 });
 
-RoleFn={
+ResourceFn={
     exist:function(){//认证用户是否存在，用loginName
         var winForm=this;
         var form=this.findByType('form')[0];
         var bform=form.getForm();
         Ext.Ajax.request({
                             async:false,
-                            url:'sys/role/exist',
+                            url:'sys/resource/exist',
                             success:function(response,opt){
                                var result=Ext.decode(response.responseText);
                                if('1'==result.msg){
-                                   msg='角色标示己被使用！';
-                                   this.findField('name').markInvalid('角色标示己被使用！');
+                                   msg='资源标示名己被使用！';
+                                   this.findField('name').markInvalid('资源标示己被使用！');
                                }else{
-                                    RoleFn.submitForm.call(winForm);
+                                    ResourceFn.submitForm.call(winForm);
                                }// if end
                             },//success end
                             failure:function(){
@@ -105,7 +105,7 @@ RoleFn={
         var winForm=this;
         var form=this.findByType('form')[0];
         form.getForm().submit({
-                url:'sys/role/save',
+                url:'sys/resource/save',
                 waitTitle:'保存',
                 waitMsg:'保存到数据库...',
                 success:function(form, action){
@@ -125,4 +125,3 @@ RoleFn={
         });//submit end
    }
 }
-

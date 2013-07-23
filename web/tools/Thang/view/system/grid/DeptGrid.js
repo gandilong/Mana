@@ -20,17 +20,24 @@ Thang.view.system.grid.DeptGrid=Ext.extend(Ext.grid.GridPanel,{
         		header:'ID',
         		dataIndex:'id'
         	},{
-            header:'部门编号',
+            header:Ext.bigFont('部门编号'),
             dataIndex:'num',
+            sortable:true,
+            width:150
           },{
-        		header:'部门名称',
-        		dataIndex:'name'
+        		header:Ext.bigFont('部门名称'),
+        		dataIndex:'name',
+            sortable:true,
+            width:210
         	},{
-        		header:'部门领导',
-        		dataIndex:'manager'
+        		header:Ext.bigFont('部门领导'),
+        		dataIndex:'manager',
+            sortable:true,
+            width:180
         	},{
-        		header:'备注',
-        		dataIndex:'opt'
+        		header:Ext.bigFont('备注'),
+        		dataIndex:'opt',
+            width:450
         	}],
           bbar: new Ext.PagingToolbar({
                 store: this.store,
