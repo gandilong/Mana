@@ -8,7 +8,7 @@ Thang.WLogin=Ext.extend(Ext.Window,{
         Thang.WLogin.superclass.constructor.call(this,{
             flex:3,
 	        width:300,
-	        height:160,
+	        height:170,
 	        plain:true,
 	        iconCls:'icon-lock_key',
             layout:'fit',
@@ -68,6 +68,17 @@ Thang.WLogin=Ext.extend(Ext.Window,{
 					    width:160,
 					    x:90,
 			            y:45
+				     },{
+				    	 xtype:'label',
+				    	 html:Ext.bigFont('记住我：'),
+				    	 x:15,
+				    	 y:75
+				     },{
+				    	 name:'remeberme',
+				    	 xtype:'checkbox',
+				    	 value:'true',
+				    	 x:90,
+				    	 y:75
 				     }],
 				     keys:[{
 							key:13,fn:function(){

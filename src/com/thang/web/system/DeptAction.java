@@ -73,7 +73,7 @@ public class DeptAction {
      */
     @RequestMapping("sys/dept/list")
 	public void deptList(HttpServletResponse response,Page page){
-		List<Dept> depts=dbe.list(Dept.class,new Condition(Dept.class,page));
+		List<Dept> depts=dbe.list(new Condition(Dept.class,page));
 		response.setContentType("text/html;charset=UTF-8");
     	try {
     		JsonGenerator json=mapper.getFactory().createGenerator(response.getWriter());

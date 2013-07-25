@@ -9,7 +9,7 @@ var homeMenu={
 				     height:45,
 					 toggleGroup:'navigation',
 				     text:Ext.bigFont('首页',true,15),
-				     icon:'../tools/icons/home.png',
+				     icon:'../tools/image/home.png',
 					 handler:function(btn,evt){
 						Ext.getCmp('mainView').layout.setActiveItem(0);
 					}
@@ -19,7 +19,7 @@ items.push(homeMenu);
 
 var officeMenu={
 					 text:Ext.bigFont('办公管理',true,15),
-					 icon:'../tools/icons/work.png',
+					 icon:'../tools/image/work.png',
 					 width:110,
 					 height:45,
 					 scale:'large',
@@ -48,7 +48,7 @@ items.push(officeMenu);
 var personMenu={
 					 id:'person',
 					 text:Ext.bigFont('人事管理',true,15),
-					 icon:'../tools/icons/person.png',
+					 icon:'../tools/image/person.png',
 					 width:110,
 					 height:45,
 					 scale:'large',
@@ -64,7 +64,7 @@ items.push(personMenu);
 var infoMenu={
 					 id:'info',
 					 text:Ext.bigFont('信息发布',true,15),
-					 icon:'../tools/icons/info.png',
+					 icon:'../tools/image/info.png',
 					 width:110,
 					 height:45,
 					 scale:'large',
@@ -79,7 +79,7 @@ items.push(infoMenu);
 var archiveMenu={
 					 id:'archive',
 					 text:Ext.bigFont('档案管理',true,15),
-					 icon:'../tools/icons/archive.png',
+					 icon:'../tools/image/archive.png',
 					 width:110,
 					 height:45,
 					 scale:'large',
@@ -94,7 +94,7 @@ items.push(archiveMenu);
 var systemMenu={
 					 id:'system',
 					 text:Ext.bigFont('系统设置',true,15),
-					 icon:'../tools/icons/tools.png',
+					 icon:'../tools/image/tools.png',
 					 width:110,
 					 height:45,
 					 scale:'large',
@@ -109,7 +109,7 @@ items.push(systemMenu);
 items.push("->");
 items.push({
 					 text:Ext.bigFont('退出',true,15),
-					 icon:'../tools/icons/logout.png',
+					 icon:'../tools/image/logout.png',
 					 width:110,
 					 height:45,
 					 scale:'large',

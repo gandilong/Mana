@@ -1,11 +1,13 @@
 package com.thang.web.system;
 
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.subject.Subject;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.thang.executor.DBExecutor;
 
 /**
  * 系统用户管理模块
@@ -15,10 +17,15 @@ import com.thang.executor.DBExecutor;
 @Controller
 public class AuthAction {
 
-	@Autowired
-	private DBExecutor dbe;
-	ObjectMapper mapper = new ObjectMapper();
-	  
 
+	@ResponseBody
+	@RequestMapping("sys/auth")
+	public String verify(@RequestParam(value="resource",required=true)String res){
+		Subject sub=SecurityUtils.getSubject();
+		if(sub.isPermitted(res)){
+			return "1";
+		}
+		return "0";
+	}
 	
 }

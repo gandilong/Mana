@@ -1,6 +1,10 @@
 package com.thang.web;
 
 import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.AuthenticationException;
+import org.apache.shiro.authc.IncorrectCredentialsException;
+import org.apache.shiro.authc.LockedAccountException;
+import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
 import org.springframework.stereotype.Controller;
@@ -34,13 +38,30 @@ public class IndexAction {
      *系统登陆验证
      */
 	@RequestMapping(value="login",method = RequestMethod.POST)
-	public String login(@RequestParam("username")String uname,@RequestParam("password")String upass,Model model) {
+	public String login(@RequestParam(value="username")String uname,@RequestParam(value="password")String upass,@RequestParam(value="remeberme",required=false)boolean remeberme ,Model model) {
 		UsernamePasswordToken token=new UsernamePasswordToken(uname, upass);
 		Subject sub=SecurityUtils.getSubject();
-		sub.login(token);
-		if(!sub.isAuthenticated()){
-			return "redirect:login";
+		if(remeberme){
+			token.setRememberMe(true);
 		}
+		if(!sub.isAuthenticated()){
+			try{
+				   sub.login(token);
+				}catch(UnknownAccountException unkonw){
+					model.addAttribute("error", "1");
+					return "login";
+				}catch(IncorrectCredentialsException ic){
+					model.addAttribute("error", "1");//用户名或密码无效！
+					return "login";
+				}catch(LockedAccountException lae){
+					model.addAttribute("error", "2");//账户己停用！
+					return "login";
+				}catch(AuthenticationException ae){
+					model.addAttribute("error", "3");//认证失败！
+					return "login";
+				}
+		}
+		
 		model.addAttribute("user", ((ShiroUser)sub.getPrincipal()).getId());
 		return "redirect:app";
 	}

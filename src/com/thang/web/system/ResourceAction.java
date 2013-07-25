@@ -18,7 +18,6 @@ import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.thang.entity.system.Resource;
-import com.thang.entity.system.Role;
 import com.thang.executor.DBExecutor;
 import com.thang.model.Condition;
 import com.thang.model.Page;
@@ -37,7 +36,7 @@ public class ResourceAction {
 	 */
     @RequestMapping("sys/resource/list")
 	public void resourceList(Page page,HttpServletResponse response){
-		List<Resource> res=dbe.list(Resource.class,new Condition(Resource.class,page));
+		List<Resource> res=dbe.list(new Condition(Resource.class,page));
 		response.setContentType("text/html;charset=UTF-8");
     	try {
     		JsonGenerator json=mapper.getFactory().createGenerator(response.getWriter());
@@ -92,7 +91,7 @@ public class ResourceAction {
         	if(null!=res&&name.equals(res.getName())){//loginName no change
         		return "{success:true,msg:'0'}";
         	}
-            List<Resource> list=dbe.list(Resource.class,new Condition(Resource.class,page).eq("name",name).ne("id", id));
+            List<Resource> list=dbe.list(new Condition(Resource.class,page).eq("name",name).ne("id", id));
             if(null!=list&&list.size()>0){
                 return "{success:true,msg:'1'}";
             }

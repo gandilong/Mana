@@ -26,7 +26,7 @@ Thang.WMsg=Ext.extend(Ext.Window,{
 								});
 								
                          },
-						 animHide : function(){
+						 animHide:function(){
 							 this.el.slideOut('b', {
 									easing: 'easeOut',
 									duration: this.showAnimDuration,

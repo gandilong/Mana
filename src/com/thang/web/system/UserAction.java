@@ -99,7 +99,7 @@ public class UserAction {
      */
 	@RequestMapping("sys/user/list")
 	public void deptUserList(@RequestParam("dept_id") String dept_id,Page page,HttpServletResponse response){
-		List<User> users=dbe.list(User.class, new Condition(User.class,page).eq("dept", dept_id));
+		List<User> users=dbe.list(new Condition(User.class,page).eq("dept", dept_id));
         response.setContentType("text/html;charset=UTF-8");
         if(null!=users&&users.size()>0){
     		try {
@@ -135,7 +135,7 @@ public class UserAction {
             	if(null!=user&&name.equals(user.getLoginName())){//loginName no change
             		return "{success:true,msg:'0'}";
             	}
-                List<User> list=dbe.list(User.class,new Condition(User.class,page).eq("loginName",name).ne("id", id));
+                List<User> list=dbe.list(new Condition(User.class,page).eq("loginName",name).ne("id", id));
                 if(null!=list&&list.size()>0){
                     return "{success:true,msg:'1'}";
                 }
@@ -152,7 +152,7 @@ public class UserAction {
      */
     @RequestMapping("sys/user/auth")
     public void userRoleResource(@RequestParam("user_id")String user_id, HttpServletResponse response){
- 	   List<String> roles_id=dbe.columns(UserRole.class, "role", new Condition(UserRole.class).eq("user", user_id));
+ 	   List<String> roles_id=dbe.columns("role", new Condition(UserRole.class).eq("user", user_id));
  	   if(null!=roles_id&&roles_id.size()>0){
  		   List<RoleResource> roleR=null;
  		   response.setContentType("text/html;charset=UTF-8");
@@ -167,7 +167,7 @@ public class UserAction {
  		   		   e.printStackTrace();
  		   	   }
  		   }else{
- 		       roleR=dbe.list(RoleResource.class, new Condition(RoleResource.class).in("role", roles_id.toArray()));
+ 		       roleR=dbe.list(new Condition(RoleResource.class).in("role", roles_id.toArray()));
  		       try {
  		   		    mapper.writeValue(response.getWriter(),roleR);
  		   	   } catch (JsonGenerationException e) {

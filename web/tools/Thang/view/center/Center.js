@@ -1,6 +1,5 @@
 Ext.ns('Thang.view.center');
 
-//所有模块的中心区都用该类的实例 来加载页面。
 Thang.view.center.Center=Ext.extend(Ext.Panel,{
 
 	constructor:function(config){

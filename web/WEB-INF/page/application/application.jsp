@@ -31,7 +31,7 @@
         <style type="text/css">
                #header{
 				           height: 44px;
-					       background: url("${ctx}/tools/icons/main_title_bg.png") repeat-x; 
+					       background: url("${ctx}/tools/image/main_title_bg.png") repeat-x; 
                }
 		    </style>
         
@@ -40,7 +40,7 @@
         <input id="user_id" type="hidden" value="${user}"/>
         <div id="header">
              <div style="float:left;">
-                  <img style="margin-left:5px" src="${ctx}/tools/icons/office.png" height="48" width="50"></img>
+                  <img style="margin-left:5px" src="${ctx}/tools/image/office.png" height="48" width="50"></img>
              </div>
 			 
              <div style="float:left;width:93%; margin-top: 7px;margin-left: 10px;margin-right:5px;color: #CCC;">

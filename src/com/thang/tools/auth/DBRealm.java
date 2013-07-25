@@ -1,5 +1,7 @@
 package com.thang.tools.auth;
 
+import java.util.List;
+
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
@@ -12,22 +14,19 @@ import org.apache.shiro.subject.PrincipalCollection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.thang.entity.system.Resource;
+import com.thang.entity.system.Role;
+import com.thang.entity.system.RoleResource;
 import com.thang.entity.system.User;
-import com.thang.service.system.UserService;
+import com.thang.entity.system.UserRole;
+import com.thang.executor.DBExecutor;
+import com.thang.model.Condition;
 
 @Component("dbRealm")
 public class DBRealm extends AuthorizingRealm{
 
-	private UserService userService;
-
-	public UserService getUserService() {
-		return userService;
-	}
+    private DBExecutor dbe;
     
-	@Autowired
-	public void setUserService(UserService userService) {
-		this.userService = userService;
-	}
 
 	/**
 	 * 授权查询回调函数, 进行鉴权但缓存中无用户的授权信息时调用.
@@ -35,9 +34,12 @@ public class DBRealm extends AuthorizingRealm{
 	@Override
 	protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principal) {
 		ShiroUser shiroUser = (ShiroUser) principal.getPrimaryPrincipal();
-		User user = userService.getUserById(shiroUser.getId());
+		User user =dbe.get(User.class,shiroUser.getId());
 		SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
-		info.addRoles(userService.getRoles(String.valueOf(user.getId())));
+		List<String> roles_id=dbe.columns("role", new Condition(UserRole.class).eq("user", user.getId()));
+		info.addRoles(dbe.columns("name", new Condition(Role.class).in("id", roles_id)));
+		List<String> resources_id=dbe.columns("resource",new Condition(RoleResource.class).in("role",roles_id));
+		info.addStringPermissions(dbe.columns("name",new Condition(Resource.class).in("id",resources_id)));
 		return info;
 	}
 
@@ -47,12 +49,20 @@ public class DBRealm extends AuthorizingRealm{
 	@Override
 	protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authcToken) throws AuthenticationException {
 		UsernamePasswordToken token = (UsernamePasswordToken) authcToken;
-		User user=userService.getUserByName(token.getUsername());
-		token.setRememberMe(true);
-		if (null!=user) {
-			return new SimpleAuthenticationInfo(new ShiroUser(String.valueOf(user.getId()), user.getUserName(), user.getLoginName()),user.getLoginPass(),getName());
-		} 
+		User user=null;
+		List<User> users=dbe.list(new Condition(User.class).eq("loginName", token.getUsername()));
+		if(null!=users&&users.size()>0){
+			user=users.get(0);
+			if(null!=user){
+			    return new SimpleAuthenticationInfo(new ShiroUser(String.valueOf(user.getId()), user.getUserName(), user.getLoginName()),user.getLoginPass(),getName());
+			}
+		}
 		return null;
+	}
+
+	@Autowired
+	public void setDbe(DBExecutor dbe) {
+		this.dbe = dbe;
 	}
 	
 	

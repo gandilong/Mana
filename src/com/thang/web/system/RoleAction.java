@@ -39,7 +39,7 @@ public class RoleAction {
 	 */
     @RequestMapping("sys/role/list")
 	public void roleList(Page page,HttpServletResponse response){
-		List<Role> roles=dbe.list(Role.class,new Condition(Role.class,page));
+		List<Role> roles=dbe.list(new Condition(Role.class,page));
 		response.setContentType("text/html;charset=UTF-8");
     	try {
     		JsonGenerator json=mapper.getFactory().createGenerator(response.getWriter());
@@ -116,7 +116,7 @@ public class RoleAction {
         	if(null!=role&&name.equals(role.getName())){//loginName no change
         		return "{success:true,msg:'0'}";
         	}
-            List<Role> list=dbe.list(Role.class,new Condition(Role.class,page).eq("name",name).ne("id", id));
+            List<Role> list=dbe.list(new Condition(Role.class,page).eq("name",name).ne("id", id));
             if(null!=list&&list.size()>0){
                 return "{success:true,msg:'1'}";
             }

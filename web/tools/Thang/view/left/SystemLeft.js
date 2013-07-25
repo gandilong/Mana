@@ -34,8 +34,8 @@ Thang.view.left.SystemLeft=Ext.extend(Ext.Panel,{
                             if('root'==node.id){
                                 if(!centerPanel.hasItem('deptgrid')){
                                     centerPanel.add(new Thang.view.system.grid.DeptGrid({id:'deptGrid'}));
-                                    centerPanel.doLayout();
                                     centerPanel.layout.setActiveItem('deptGrid');
+                                    centerPanel.doLayout();
                                 }else{
                                     centerPanel.layout.setActiveItem('deptGrid');
                                     centerPanel.getItem('deptgrid').getStore().reload();
@@ -50,8 +50,8 @@ Thang.view.left.SystemLeft=Ext.extend(Ext.Panel,{
                                      store.reload();
                                 }else{
                                      centerPanel.add(new Thang.view.system.grid.UserGrid({id:'userGrid',params:{'dept_id':node.id}}));
-                                     centerPanel.doLayout();
                                      centerPanel.layout.setActiveItem('userGrid');
+                                     centerPanel.doLayout();
                                      centerPanel.getItem('usergrid').getStore().load();
                                 }
                                 
@@ -88,8 +88,8 @@ Thang.view.left.SystemLeft=Ext.extend(Ext.Panel,{
                                     centerPanel.getItem('rolegrid').getStore().load();
                                 }else{
                                     centerPanel.add(new Thang.view.system.grid.RoleGrid({id:'roleGrid'}));
-                                    centerPanel.doLayout();
                                     centerPanel.layout.setActiveItem('roleGrid');
+                                    centerPanel.doLayout();
                                     centerPanel.getItem('rolegrid').getStore().load();
                                 }
                             }else if('resource'==node.id){
@@ -98,8 +98,8 @@ Thang.view.left.SystemLeft=Ext.extend(Ext.Panel,{
                                     centerPanel.getItem('resourcegrid').getStore().load();
                                 }else{
                                     centerPanel.add(new Thang.view.system.grid.ResourceGrid({id:'resourceGrid'}));
-                                    centerPanel.doLayout();
                                     centerPanel.layout.setActiveItem('resourceGrid');
+                                    centerPanel.doLayout();
                                     centerPanel.getItem('resourcegrid').getStore().load();
                                 }
 
@@ -118,38 +118,25 @@ Thang.view.left.SystemLeft=Ext.extend(Ext.Panel,{
                         expanded:true,
                         children:[{
                             text:Ext.bigFont('数据库'),
-                            children:[{
-                                text:Ext.bigFont('备份数据'),
-                                leaf:true
-                            },{
-                                text:Ext.bigFont('恢复数据'),
-                                leaf:true
-                            },{
-                                text:Ext.bigFont('执行SQL文件'),
-                                leaf:true
-                            },{
-                                text:Ext.bigFont('创建表'),
-                                leaf:true
-                            },{
-                                text:Ext.bigFont(''),
-                            }]
+                            leaf:true,
+                            id:'database'
                         },{
                            text:Ext.bigFont('模板管理'),
                            leaf:true
                         }]
                     }),
-                  listeners:function(){
+                  listeners:{
                      'click':function(node,e){
                           var centerPanel=this.findParentByType('systempanel').findByType('centerpanel')[0];
                           if('database'==node.id){
                               if(centerPanel.hasItem('database')){
                                     centerPanel.layout.setActiveItem('database');
-                                    centerPanel.getItem('database').getStore().load();
+                                    //centerPanel.getItem('database').getStore().load();
                                 }else{
-                                    centerPanel.add(new Thang.view.system.grid.RoleGrid({id:'database'}));
-                                    centerPanel.doLayout();
+                                    centerPanel.add(new Thang.view.center.Database({id:'database'}));
                                     centerPanel.layout.setActiveItem('database');
-                                    centerPanel.getItem('database').getStore().load();
+                                    centerPanel.doLayout();
+                                    //centerPanel.getItem('database').getStore().load();
                                 }
                           }
                      }

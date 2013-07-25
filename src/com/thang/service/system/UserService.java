@@ -21,7 +21,7 @@ public class UserService {
 	}
 	
 	public User getUserByName(String loginName){
-		List<User> users=dbe.list(User.class, new Condition(User.class).eq("loginName", loginName));
+		List<User> users=dbe.list(new Condition(User.class).eq("loginName", loginName));
 		if(null!=users&&users.size()>0){
 			return users.get(0);
 		}
