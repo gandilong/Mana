@@ -4,7 +4,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Application Index</title>
+        <title>Mana办公管理系统</title>
 
         <script type="text/javascript" src='<c:url value="/tools/Thang/xcomp/Power.js"></c:url>'></script>
 

@@ -9,7 +9,7 @@ public class Resource {
 	private long id;
 	private String name;
 	private String title;
-	private int leaf;//0 is leaf and 1 has leaf
+	//private int leaf;//0 is leaf and 1 has leaf
 	private String parent;
 	private String url;
 	private String opt;
@@ -32,12 +32,7 @@ public class Resource {
 	public void setTitle(String title) {
 		this.title = title;
 	}
-	public int getLeaf() {
-		return leaf;
-	}
-	public void setLeaf(int leaf) {
-		this.leaf = leaf;
-	}
+	
 	public String getParent() {
 		return parent;
 	}

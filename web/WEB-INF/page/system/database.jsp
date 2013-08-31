@@ -9,11 +9,11 @@
 <body>
      
      
-     <table height="100%">
+     <table height="80%" border="0">
           <tbody>
               <tr>
                    <td>
-                       <table width="650" height="100%">
+                       <table width="70%" height="100%" border="0">
 				           <thead>
 				               <tr>
 				                   <th colspan="3" style="font-family: sans-serif;font-size: 13px">

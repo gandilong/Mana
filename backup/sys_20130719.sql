@@ -55,7 +55,7 @@ DROP TABLE IF EXISTS `sys_role_info`;
 
 CREATE TABLE `sys_role_info` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(45) CHARACTER SET latin1 DEFAULT NULL COMMENT '英文名称',
+  `name` varchar(45) CHARACTER SET utf8 DEFAULT NULL COMMENT '英文名称',
   `opt` varchar(225) DEFAULT NULL,
   `title` char(80) DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -87,12 +87,12 @@ DROP TABLE IF EXISTS `sys_user_info`;
 CREATE TABLE `sys_user_info` (
   `id` int(36) NOT NULL AUTO_INCREMENT,
   `user_name` char(20) DEFAULT NULL,
-  `login_name` varchar(65) CHARACTER SET latin1 DEFAULT NULL,
-  `login_pass` varchar(45) CHARACTER SET latin1 DEFAULT NULL,
-  `birth` varchar(45) CHARACTER SET latin1 DEFAULT NULL,
-  `image` varchar(225) CHARACTER SET latin1 DEFAULT NULL,
-  `sex` char(1) CHARACTER SET latin1 DEFAULT NULL,
-  `dept` varchar(36) CHARACTER SET latin1 DEFAULT NULL,
+  `login_name` varchar(65) CHARACTER SET utf8 DEFAULT NULL,
+  `login_pass` varchar(45) CHARACTER SET utf8 DEFAULT NULL,
+  `birth` varchar(45) CHARACTER SET utf8 DEFAULT NULL,
+  `image` varchar(225) CHARACTER SET utf8 DEFAULT NULL,
+  `sex` char(1) CHARACTER SET utf8 DEFAULT NULL,
+  `dept` varchar(36) CHARACTER SET utf8 DEFAULT NULL,
   `opt` char(225) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
@@ -107,8 +107,8 @@ DROP TABLE IF EXISTS `sys_user_role_info`;
 
 CREATE TABLE `sys_user_role_info` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `user` varchar(36) CHARACTER SET latin1 DEFAULT NULL,
-  `role` varchar(36) CHARACTER SET latin1 DEFAULT NULL,
+  `user` varchar(36) CHARACTER SET utf8 DEFAULT NULL,
+  `role` varchar(36) CHARACTER SET utf8 DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 

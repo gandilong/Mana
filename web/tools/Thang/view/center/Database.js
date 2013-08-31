@@ -60,7 +60,7 @@ Thang.view.center.Database=Ext.extend(Ext.Panel,{
                     title:Ext.bigFont('控制台'),
                     collapsible:false,
                     region:'south',
-                    height:180
+                    height:120
 
                 }]
          });         
