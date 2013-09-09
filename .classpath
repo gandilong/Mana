@@ -35,7 +35,6 @@
 	<classpathentry kind="lib" path="web/WEB-INF/lib/commons-pool-1.6.jar"/>
 	<classpathentry kind="lib" path="web/WEB-INF/lib/dom4j-1.6.1.jar"/>
 	<classpathentry kind="lib" path="web/WEB-INF/lib/gson-2.2.4.jar"/>
-	<classpathentry kind="lib" path="web/WEB-INF/lib/jsp-api.jar"/>
 	<classpathentry kind="lib" path="web/WEB-INF/lib/jstl.jar"/>
 	<classpathentry kind="lib" path="web/WEB-INF/lib/log4j-1.2.16.jar"/>
 	<classpathentry kind="lib" path="web/WEB-INF/lib/ModelSQL.jar"/>

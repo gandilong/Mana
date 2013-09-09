@@ -1,9 +1,5 @@
 package com.thang.entity.application;
 
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-
 public class Insend {
 
 	private String id;

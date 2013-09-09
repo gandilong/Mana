@@ -1,26 +1,27 @@
-<%@ page language="java" import="java.util.*" pageEncoding="ISO-8859-1"%>
-<%
-String path = request.getContextPath();
-String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
-%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@include file="/include/taglibs.jsp" %>
 
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!DOCTYPE html>
 <html>
-  <head>
-    <base href="<%=basePath%>">
-    
-    <title>My JSP 'index.jsp' starting page</title>
-	<meta http-equiv="pragma" content="no-cache">
-	<meta http-equiv="cache-control" content="no-cache">
-	<meta http-equiv="expires" content="0">    
-	<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
-	<meta http-equiv="description" content="This is my page">
-	<!--
-	<link rel="stylesheet" type="text/css" href="styles.css">
-	-->
-  </head>
-  
-  <body>
-    This is my JSP page. <br>
-  </body>
+    <head>
+        <title>Mana</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <%@include file="/include/bootstrap.jsp" %>
+    </head>
+    <body>
+        <div class="container">
+            
+            <h1>办公产品   Mana</h1>
+            <p class="lead">
+                                          该产品只应用于办公内部业务的处理，具有工作流功能。
+            </p>
+            <a href="web/login" class="btn">登陆</a>
+            <p class="text-right">
+                                              作者：<strong>Gandilong</strong><br/>
+                 <small class="text-right">本产品尚处于开发中...</small>
+            </p>
+            
+            
+        </div>
+    </body>
 </html>
