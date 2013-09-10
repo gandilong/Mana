@@ -6,7 +6,7 @@ import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.apache.shiro.web.servlet.AbstractShiroFilter;
 import org.apache.shiro.web.util.WebUtils;
 
-import com.thang.tools.util.SpringContext;
+import com.thang.tools.util.SpringUtils;
 
 public class AuthFilter extends AbstractShiroFilter {
 
@@ -17,7 +17,7 @@ public class AuthFilter extends AbstractShiroFilter {
 		WebEnvironment webEn=WebUtils.getWebEnvironment(getServletContext());
 		DefaultWebSecurityManager webSec=(DefaultWebSecurityManager)webEn.getWebSecurityManager();
 		setSecurityManager(webSec);
-		webSec.setRealm(SpringContext.getBean("dbRealm", DBRealm.class));
+		webSec.setRealm(SpringUtils.getBean("dbRealm", DBRealm.class));
 		FilterChainResolver resolver=webEn.getFilterChainResolver();
 		if(null!=resolver){
 			setFilterChainResolver(resolver);

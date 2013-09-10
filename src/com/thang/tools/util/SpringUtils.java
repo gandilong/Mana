@@ -1,41 +1,31 @@
 package com.thang.tools.util;
 
-import javax.servlet.ServletContext;
 
-import org.springframework.context.ApplicationContext;
-import org.springframework.web.context.support.WebApplicationContextUtils;
+import org.springframework.beans.BeansException;
+import org.springframework.beans.factory.BeanFactory;
+import org.springframework.beans.factory.BeanFactoryAware;
 
-public class SpringUtils {
+public class SpringUtils implements BeanFactoryAware{
 
-	private static ApplicationContext applicationContext=null;
+    private static BeanFactory factory; 
 	
-	private static void init(ServletContext context){
-		applicationContext=WebApplicationContextUtils.getWebApplicationContext(context);
-	}
 	
-	public static ApplicationContext getApplicationContext(ServletContext context){
-		if(null!=applicationContext){
-			return applicationContext;
-		}else{
-			init(context);
+	public static <T> T getBean(String beanName,Class<T> cls){
+		T bean=null;
+		if(null!=SpringUtils.getFactory()){
+			bean=(T)SpringUtils.getFactory().getBean(beanName,cls);
 		}
-		return WebApplicationContextUtils.getWebApplicationContext(context);
+		return bean;
 	}
 	
-	public static Object getBean(ServletContext context,String id){
-		return getApplicationContext(context).getBean(id);
-	}
 	
-	public static Object getBean(ServletContext context,Class<?> cls){
-		return getApplicationContext(context).getBean(cls);
+	public static BeanFactory getFactory() {
+		return factory;
 	}
-	
-	public static Object getBean(String id){
-		if(null!=applicationContext){
-			return applicationContext.getBean(id);
-		}
-		return null;
+
+
+	public void setBeanFactory(BeanFactory beanFactory) throws BeansException {
+		SpringUtils.factory=beanFactory;
 	}
-	
 	
 }
